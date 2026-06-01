@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from compliance_drift_detector import ComplianceDriftDetector, PolicyClaimType
 from report_renderer import render_markdown_report, render_json_report
+from render_html_report import render_html_report
 
 
 def generate_sample_policies() -> list[dict]:
@@ -201,7 +202,7 @@ def generate_sample_evidence() -> list[dict]:
 def main():
     """Run the demo and produce all artifacts."""
     print("=" * 60)
-    print("  COMPLIANCE DRIFT DETECTOR — Demo Run")
+    print("  COMPLIANCE DRIFT DETECTOR - Demo Run")
     print("=" * 60)
     print()
 
@@ -209,8 +210,8 @@ def main():
     print("[1/5] Generating sample policies and behavior evidence...")
     policies = generate_sample_policies()
     evidence = generate_sample_evidence()
-    print(f"      → {len(policies)} policy claims")
-    print(f"      → {len(evidence)} evidence points over 30 days")
+    print(f"      -> {len(policies)} policy claims")
+    print(f"      -> {len(evidence)} evidence points over 30 days")
     print()
 
     # Initialize detector
@@ -231,16 +232,16 @@ def main():
     # Detect drift
     print("[4/5] Analyzing drift...")
     report = detector.detect_drift()
-    print(f"      → {len(report.analyses)} claims analyzed")
-    print(f"      → {len(report.undeclared_behaviors)} undeclared behaviors found")
-    print(f"      → Verdict: {report.summary['verdict']}")
+    print(f"      -> {len(report.analyses)} claims analyzed")
+    print(f"      -> {len(report.undeclared_behaviors)} undeclared behaviors found")
+    print(f"      -> Verdict: {report.summary['verdict']}")
     print()
 
     # Export evidence
     evidence_export = detector.export_evidence()
 
     # Write output
-    output_dir = Path(__file__).parent / "output"
+    output_dir = Path(__file__).parent.parent / "output"
     output_dir.mkdir(exist_ok=True)
 
     print("[5/5] Writing artifacts...")
@@ -248,22 +249,27 @@ def main():
     # Drift report JSON
     report_json_path = output_dir / "drift_report.json"
     report_json_path.write_text(render_json_report(report), encoding="utf-8")
-    print(f"      → {report_json_path}")
+    print(f"      -> {report_json_path.name}")
 
     # Drift report markdown
     report_md_path = output_dir / "drift_report.md"
     report_md_path.write_text(render_markdown_report(report), encoding="utf-8")
-    print(f"      → {report_md_path}")
+    print(f"      -> {report_md_path.name}")
+
+    # Drift report HTML
+    report_html_path = output_dir / "drift_report.html"
+    report_html_path.write_text(render_html_report(report), encoding="utf-8")
+    print(f"      -> {report_html_path.name}")
 
     # Evidence export
     evidence_path = output_dir / "drift_evidence.json"
     evidence_path.write_text(json.dumps(evidence_export, indent=2), encoding="utf-8")
-    print(f"      → {evidence_path}")
+    print(f"      -> {evidence_path.name}")
 
     # Input data (for reproducibility)
     input_path = output_dir / "input_data.json"
     input_path.write_text(json.dumps({"policies": policies, "evidence_count": len(evidence)}, indent=2), encoding="utf-8")
-    print(f"      → {input_path}")
+    print(f"      -> {input_path.name}")
 
     print()
     print("=" * 60)
@@ -285,7 +291,7 @@ def main():
             print(f"    - {ub.behavior_pattern} ({ub.occurrence_count} occurrences)")
     print()
     print("  All artifacts written to: output/")
-    print("  Run 'python verify.py output/drift_report.json' to verify.")
+    print("  Verify with: python software/verify.py output/drift_report.json")
     print()
 
 

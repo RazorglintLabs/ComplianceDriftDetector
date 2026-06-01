@@ -115,36 +115,13 @@ def main():
     evidence_path = input_dir / "behavior_evidence.csv"
 
     # Check input directory exists
-    if not input_dir.exists():
-        print("=" * 60)
-        print("  No input/ directory found.")
+    if not input_dir.exists() or not policy_path.exists() or not evidence_path.exists():
         print()
-        print("  To run a scan:")
-        print("    1. Create an input/ folder")
-        print("    2. Add policy_claims.csv")
-        print("    3. Add behavior_evidence.csv")
+        print("  No input CSV files found. Running bundled demo instead.")
         print()
-        print("  See input_templates/ for format reference.")
-        print("  See examples/template_packs/ for ready-to-use examples.")
-        print()
-        print("  Running demo instead...")
-        print("=" * 60)
-        print()
-        from software.run_demo import main as demo_main
+        from run_demo import main as demo_main
         demo_main()
         return
-
-    if not policy_path.exists() or not evidence_path.exists():
-        print("=" * 60)
-        print("  input/ directory found but missing required files:")
-        if not policy_path.exists():
-            print(f"    MISSING: {policy_path}")
-        if not evidence_path.exists():
-            print(f"    MISSING: {evidence_path}")
-        print()
-        print("  Both files are required. See input_templates/ for format.")
-        print("=" * 60)
-        sys.exit(1)
 
     # Load data
     print("Loading policy claims...")
@@ -200,12 +177,12 @@ def main():
         print(f"    {state}: {count}")
     print()
     print("  Reports written to:")
-    print(f"    {json_path}")
-    print(f"    {md_path}")
-    print(f"    {html_path}")
-    print(f"    {evidence_path_out}")
+    print(f"    output/drift_report.json")
+    print(f"    output/drift_report.md")
+    print(f"    output/drift_report.html")
+    print(f"    output/drift_evidence.json")
     print()
-    print("  Verify with: python software/verify.py")
+    print("  Verify with: python software/verify.py output/drift_report.json")
     print()
     print("  No data left your machine.")
     print("=" * 60)
