@@ -12,7 +12,11 @@ Quick question: do you have checkpoint-based evidence that your systems still ma
 
 We built a deterministic drift detector that compares policy claims to actual system behavior and produces a tamper-evident report. No AI, no blackbox, independently verifiable.
 
-Running 2–3 intro scans this week at €149. Takes 48 hours. You send anonymized policy + behavior data, we deliver a sealed drift report.
+Paid assisted review:
+- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
+- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+
+After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
 
 Interested?
 
@@ -31,6 +35,12 @@ We built ComplianceDriftDetector — a deterministic engine that measures the ga
 No AI. No blackbox. Every scoring rule is visible in source. The output is verifiable by anyone with a hash function.
 
 **This week's offer:** Intro scan (1–3 policy claims) for €149. You send anonymized policy excerpts and behavior samples. We deliver a sealed drift report in 48 hours.
+
+Paid assisted review:
+- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
+- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+
+After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
 
 This is a detection tool, not a certification claim. It produces evidence you can use during audit preparation — it doesn't replace auditors.
 

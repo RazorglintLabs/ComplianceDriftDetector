@@ -132,6 +132,17 @@ This tool asks: **"Are you drifting away from compliance — and can you prove w
 
 That's the difference between a point-in-time checkbox and continuous governance evidence.
 
-## License
+## License / Use
 
-Proprietary — RazorGlint Labs. All rights reserved.
+Copyright © 2026 Razorglint Labs / TCOG Collective LLC. All rights reserved.
+
+This repository is published for evaluation and buyer demonstration. No open-source license is granted. See `NOTICE.md`.
+
+Commercial use, resale, hosted-service use, redistribution, or modified redistribution requires written permission from Razorglint Labs / TCOG Collective LLC.
+
+## Paid Assisted Review
+
+- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
+- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+
+After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.

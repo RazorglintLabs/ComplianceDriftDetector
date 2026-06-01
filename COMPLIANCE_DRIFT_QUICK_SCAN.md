@@ -93,6 +93,13 @@ You verify:   Run verify.py on any artifact — PASS or FAIL
 
 ---
 
+## Paid Assisted Review
+
+- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
+- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+
+After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
+
 ## Next Step
 
 Reply with "interested" or reach out directly. We'll send the intake checklist and scope the scan within 24 hours.

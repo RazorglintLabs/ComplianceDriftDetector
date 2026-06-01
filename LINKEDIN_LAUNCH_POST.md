@@ -31,11 +31,14 @@ We're running 2–3 pilot scans this week.
 
 - You send anonymized policy claims + behavior samples
 - We deliver a sealed drift report in 48 hours
-- €149 intro / €299 expanded
+
+Paid assisted review:
+- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
+- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+
+After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
 
 If you're a CISO, compliance lead, or AI governance lead preparing for SOC 2, ISO 27001, or EU AI Act readiness — DM me.
-
-No secrets required. No production credentials. Just policy text and system behavior logs.
 
 ---
 
