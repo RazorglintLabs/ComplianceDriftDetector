@@ -1,0 +1,5 @@
+evidence_id,timestamp,claim_ref,observed_value,compliant,source
+EV-001,2026-01-01T10:00:00Z,POL-001,approved,true,deployment_log
+EV-002,2026-01-01T14:00:00Z,POL-001,unapproved,false,deployment_log
+EV-003,2026-01-02T09:00:00Z,POL-002,session_hours=2,true,access_log
+EV-004,2026-01-02T09:30:00Z,POL-002,session_hours=48,false,access_log

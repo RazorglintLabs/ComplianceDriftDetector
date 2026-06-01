@@ -1,0 +1,14 @@
+evidence_id,timestamp,claim_ref,observed_value,compliant,source
+EV-D001,2026-01-01T09:15:00Z,POL-DEPLOY-001,approved by manager_A,true,deploy_log
+EV-D002,2026-01-01T14:30:00Z,POL-DEPLOY-001,approved by manager_B,true,deploy_log
+EV-D003,2026-01-02T10:00:00Z,POL-DEPLOY-001,no approval recorded,false,deploy_log
+EV-D004,2026-01-02T16:45:00Z,POL-DEPLOY-001,approved by manager_A,true,deploy_log
+EV-D005,2026-01-03T08:00:00Z,POL-DEPLOY-001,no approval recorded,false,deploy_log
+EV-D006,2026-01-01T09:15:00Z,POL-DEPLOY-002,CI passed,true,ci_pipeline
+EV-D007,2026-01-01T14:30:00Z,POL-DEPLOY-002,CI passed,true,ci_pipeline
+EV-D008,2026-01-02T10:00:00Z,POL-DEPLOY-002,CI skipped,false,ci_pipeline
+EV-D009,2026-01-02T16:45:00Z,POL-DEPLOY-002,CI passed,true,ci_pipeline
+EV-D010,2026-01-03T08:00:00Z,POL-DEPLOY-002,CI passed,true,ci_pipeline
+EV-D011,2026-01-02T11:30:00Z,POL-DEPLOY-003,documented in 0.5 hours,true,incident_log
+EV-D012,2026-01-03T09:00:00Z,POL-DEPLOY-003,documented in 3 hours,false,incident_log
+EV-D013,2026-01-01T12:00:00Z,UNDECLARED-HOTFIX,emergency hotfix without process,true,deploy_log

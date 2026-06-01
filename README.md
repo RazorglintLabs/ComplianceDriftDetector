@@ -52,23 +52,53 @@ And produces:
 
 Every threshold is configurable and visible. Every measurement rule is in source. No hidden scoring.
 
+## Run Locally in 60 Seconds
+
+**No cloud. No credentials. No data leaves your machine.**
+
+```bash
+# 1. Add your CSVs to input/
+#    (or skip this step to run the built-in demo)
+
+# 2. Run
+python software/run_scan.py
+
+# 3. Open output/drift_report.html in your browser
+```
+
+See [SELF_SERVICE_QUICKSTART.md](SELF_SERVICE_QUICKSTART.md) for the full walkthrough.
+
+**Windows users:** Double-click `START_HERE.bat`.
+
+## Self-Service Mode
+
+| Step | What You Do |
+|------|-------------|
+| 1 | Put `policy_claims.csv` + `behavior_evidence.csv` in `input/` |
+| 2 | Run `python software/run_scan.py` |
+| 3 | Open `output/drift_report.html` |
+
+Template CSVs: `input_templates/`  
+Example packs: `examples/template_packs/` (deployment, access, AI logging)
+
+No data leaves your machine. No internet connection required.
+
 ## Run the Demo
 
 ```bash
-cd software
-python run_demo.py
+python software/run_demo.py
 ```
 
 Produces:
 - `output/drift_report.json` — machine-readable drift analysis
 - `output/drift_report.md` — human-readable report
+- `output/drift_report.html` — browser-viewable executive report
 - `output/drift_evidence.json` — full evidence with hashes
-- `output/policy_alignment_timeline.json` — alignment over time
 
 ## Verify Any Output
 
 ```bash
-python verify.py output/drift_report.json
+python software/verify.py
 ```
 
 Returns PASS or FAIL. No ambiguity.

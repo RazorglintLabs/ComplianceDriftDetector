@@ -1,0 +1,4 @@
+claim_id,description,testable_assertion,claim_type,threshold
+POL-ACCESS-001,No persistent admin access beyond 24 hours,admin.session_hours <= 24,THRESHOLD,24
+POL-ACCESS-002,Privileged access requires MFA,priv_access.mfa == true,REQUIREMENT,
+POL-ACCESS-003,Service accounts reviewed monthly,service_account.review_days <= 30,THRESHOLD,30

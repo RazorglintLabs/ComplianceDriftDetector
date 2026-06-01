@@ -1,0 +1,14 @@
+evidence_id,timestamp,claim_ref,observed_value,compliant,source
+EV-A001,2026-01-01T08:00:00Z,POL-ACCESS-001,session_hours=4,true,access_log
+EV-A002,2026-01-02T08:00:00Z,POL-ACCESS-001,session_hours=2,true,access_log
+EV-A003,2026-01-03T08:00:00Z,POL-ACCESS-001,session_hours=72,false,access_log
+EV-A004,2026-01-04T08:00:00Z,POL-ACCESS-001,session_hours=48,false,access_log
+EV-A005,2026-01-05T08:00:00Z,POL-ACCESS-001,session_hours=6,true,access_log
+EV-A006,2026-01-01T09:00:00Z,POL-ACCESS-002,MFA verified,true,auth_log
+EV-A007,2026-01-02T09:00:00Z,POL-ACCESS-002,MFA verified,true,auth_log
+EV-A008,2026-01-03T09:00:00Z,POL-ACCESS-002,MFA bypassed,false,auth_log
+EV-A009,2026-01-04T09:00:00Z,POL-ACCESS-002,MFA verified,true,auth_log
+EV-A010,2026-01-05T09:00:00Z,POL-ACCESS-002,MFA verified,true,auth_log
+EV-A011,2026-01-01T10:00:00Z,POL-ACCESS-003,last_review_days=15,true,iam_audit
+EV-A012,2026-01-15T10:00:00Z,POL-ACCESS-003,last_review_days=30,true,iam_audit
+EV-A013,2026-01-30T10:00:00Z,POL-ACCESS-003,last_review_days=45,false,iam_audit

@@ -1,0 +1,14 @@
+evidence_id,timestamp,claim_ref,observed_value,compliant,source
+EV-AI001,2026-01-01T06:00:00Z,POL-AI-001,output logged,true,ml_pipeline
+EV-AI002,2026-01-01T12:00:00Z,POL-AI-001,output logged,true,ml_pipeline
+EV-AI003,2026-01-02T06:00:00Z,POL-AI-001,output logged,true,ml_pipeline
+EV-AI004,2026-01-02T12:00:00Z,POL-AI-001,output not logged,false,ml_pipeline
+EV-AI005,2026-01-03T06:00:00Z,POL-AI-001,output logged,true,ml_pipeline
+EV-AI006,2026-01-01T00:00:00Z,POL-AI-002,coverage=0.997,true,monitoring
+EV-AI007,2026-01-02T00:00:00Z,POL-AI-002,coverage=0.993,true,monitoring
+EV-AI008,2026-01-03T00:00:00Z,POL-AI-002,coverage=0.985,false,monitoring
+EV-AI009,2026-01-04T00:00:00Z,POL-AI-002,coverage=0.991,true,monitoring
+EV-AI010,2026-01-05T00:00:00Z,POL-AI-002,coverage=0.978,false,monitoring
+EV-AI011,2026-01-01T10:00:00Z,POL-AI-003,human review completed,true,review_log
+EV-AI012,2026-01-03T10:00:00Z,POL-AI-003,human review completed,true,review_log
+EV-AI013,2026-01-05T10:00:00Z,POL-AI-003,deployed without review,false,review_log

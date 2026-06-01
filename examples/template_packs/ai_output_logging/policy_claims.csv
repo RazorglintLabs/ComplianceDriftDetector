@@ -1,0 +1,4 @@
+claim_id,description,testable_assertion,claim_type,threshold
+POL-AI-001,All AI model outputs are logged,ai.output_logged == true,REQUIREMENT,
+POL-AI-002,AI output logging coverage >= 99%,ai.logging_coverage >= 0.99,THRESHOLD,0.99
+POL-AI-003,Human review occurs before production deployment,ai.human_review == true,PROCESS,

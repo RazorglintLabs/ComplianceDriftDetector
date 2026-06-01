@@ -1,0 +1,4 @@
+claim_id,description,testable_assertion,claim_type,threshold
+POL-DEPLOY-001,All production deployments require manager approval before merge,deploy.approved == true,REQUIREMENT,
+POL-DEPLOY-002,No deployment without passing CI pipeline,deploy.ci_passed == true,REQUIREMENT,
+POL-DEPLOY-003,Rollbacks must be documented within 1 hour,rollback.documented_hours <= 1,THRESHOLD,1

@@ -1,0 +1,4 @@
+claim_id,description,testable_assertion,claim_type,threshold
+POL-001,All production deployments require manager approval,deploy.approved == true,REQUIREMENT,
+POL-002,No persistent admin access beyond 24 hours,admin.session_hours <= 24,THRESHOLD,24
+POL-003,Incident response starts within 4 hours,incident.response_hours <= 4,THRESHOLD,4
