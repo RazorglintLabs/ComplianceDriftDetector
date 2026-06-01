@@ -51,9 +51,9 @@ That is the thing many teams only discover when the auditor is already asking.
 
 Download the local kit. Run it on your machine. If you want updates, support, or commercial/client-facing use, choose a license.
 
-Starter — $49/mo (internal evaluation)
-Team — $149/mo (internal teams, 1 assisted interpretation/month)
-Consultant — $299/mo (client-facing advisory, 2 interpretations/month)
+Starter — $49/mo, 7-day free trial
+Team — $149/mo
+Consultant — $299/mo
 
 If you are a CISO, compliance lead, engineering lead, or AI governance lead and you want to see policy drift before audit day, DM me "drift".
 
@@ -67,5 +67,10 @@ If you are a CISO, compliance lead, engineering lead, or AI governance lead and 
 
 Self-service release:
 https://github.com/RazorglintLabs/ComplianceDriftDetector/releases/tag/v0.1.1-self-service
+
+Subscribe:
+- Starter ($49/mo, 7-day trial): https://buy.stripe.com/cNi5kxghbd3CbdKfKn1ZS08
+- Team ($149/mo): https://buy.stripe.com/fZubIVe934x61DadCf1ZS07
+- Consultant ($299/mo): https://buy.stripe.com/14AdR39SNgfOepW8hV1ZS06
 
 License tiers and policies are in the repo README.

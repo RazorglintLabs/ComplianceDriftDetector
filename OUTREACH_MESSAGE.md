@@ -15,9 +15,9 @@ We built a deterministic drift detector that compares policy claims to actual sy
 You can download and run it locally — no cloud, no credentials, no data leaves your machine.
 
 If you want updates, support, or commercial use:
-- Starter: $49/mo (internal evaluation)
-- Team: $149/mo (internal teams, 1 assisted interpretation/month)
-- Consultant: $299/mo (client-facing advisory)
+- Starter: [$49/mo, 7-day free trial](https://buy.stripe.com/cNi5kxghbd3CbdKfKn1ZS08)
+- Team: [$149/mo](https://buy.stripe.com/fZubIVe934x61DadCf1ZS07)
+- Consultant: [$299/mo](https://buy.stripe.com/14AdR39SNgfOepW8hV1ZS06)
 
 Interested?
 

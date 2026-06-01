@@ -148,6 +148,10 @@ Commercial use, resale, hosted-service use, redistribution, or modified redistri
 | Team | $149/mo | Internal compliance/security teams |
 | Consultant | $299/mo | vCISOs, SOC 2/ISO/GRC consultants |
 
+- Starter — [$49/mo, 7-day free trial](https://buy.stripe.com/cNi5kxghbd3CbdKfKn1ZS08)
+- Team — [$149/mo](https://buy.stripe.com/fZubIVe934x61DadCf1ZS07)
+- Consultant — [$299/mo](https://buy.stripe.com/14AdR39SNgfOepW8hV1ZS06)
+
 Download the local kit. Run it on your machine. If you want updates, support, or commercial/client-facing use, choose a license.
 
 No secrets, credentials, customer PII, or production access required.

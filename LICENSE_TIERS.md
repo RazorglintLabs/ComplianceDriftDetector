@@ -20,6 +20,8 @@ For solo practitioners and internal evaluation.
 - Email support / async questions
 - 1 assisted interpretation question per month
 
+[Subscribe — $49/mo, 7-day free trial](https://buy.stripe.com/cNi5kxghbd3CbdKfKn1ZS08)
+
 ### Team — $149/month
 
 For SaaS teams, GRC teams, small security teams.
@@ -31,6 +33,8 @@ For SaaS teams, GRC teams, small security teams.
 - Priority support
 - Permission to use reports internally for audit prep
 
+[Subscribe — $149/mo](https://buy.stripe.com/fZubIVe934x61DadCf1ZS07)
+
 ### Consultant — $299/month
 
 For GRC consultants, SOC 2 consultants, ISO consultants, vCISOs.
@@ -40,6 +44,8 @@ For GRC consultants, SOC 2 consultants, ISO consultants, vCISOs.
 - 2 assisted report interpretations per month
 - Reusable client intake templates
 - Commercial consulting use allowed
+
+[Subscribe — $299/mo](https://buy.stripe.com/14AdR39SNgfOepW8hV1ZS06)
 
 ## Boundaries
 
