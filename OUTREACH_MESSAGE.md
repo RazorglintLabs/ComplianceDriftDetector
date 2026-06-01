@@ -8,7 +8,7 @@
 
 Hi [Name],
 
-Quick question: do you have continuous proof that your systems still match your stated compliance policies — or do you only find out at audit time?
+Quick question: do you have checkpoint-based evidence that your systems still match your stated compliance policies between audits — or do you only find out at audit time?
 
 We built a deterministic drift detector that compares policy claims to actual system behavior and produces a tamper-evident report. No AI, no blackbox, independently verifiable.
 
@@ -32,9 +32,9 @@ No AI. No blackbox. Every scoring rule is visible in source. The output is verif
 
 **This week's offer:** Intro scan (1–3 policy claims) for €149. You send anonymized policy excerpts and behavior samples. We deliver a sealed drift report in 48 hours.
 
-This is a detection tool, not a certification claim. It produces evidence you can hand to auditors — it doesn't replace them.
+This is a detection tool, not a certification claim. It produces evidence you can use during audit preparation — it doesn't replace auditors.
 
-If you're preparing for SOC 2 Type II, ISO 27001 renewal, or EU AI Act readiness — this gives you continuous alignment proof between audit points.
+If you're preparing for SOC 2 Type II, ISO 27001 renewal, or EU AI Act readiness — this gives you checkpoint-based alignment evidence between audit points.
 
 Reply if you'd like the intake checklist.
 
@@ -67,7 +67,7 @@ Interested in seeing what drift looks like on real data?
 
 Hi [Name],
 
-EU AI Act Articles 9 and 12 require documented risk management and continuous monitoring for high-risk AI systems. The question isn't whether you have policies — it's whether your systems still follow them.
+For AI governance programs preparing around EU AI Act risk-management, logging, and monitoring expectations — the question isn't whether you have policies. It's whether your systems still follow them.
 
 We run a deterministic policy-to-behavior drift analysis. You send us your AI governance claims (e.g., "all model outputs are logged," "human review occurs before deployment," "bias checks run weekly") and anonymized evidence. We deliver a sealed report showing which claims are holding, which are drifting, and which are violated.
 
