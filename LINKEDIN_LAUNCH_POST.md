@@ -1,45 +1,72 @@
-# LinkedIn Launch Post — ComplianceDriftDetector v0.1.0-demo
+# LinkedIn Launch Post — ComplianceDriftDetector v0.1.1
 
 ---
 
 ## Post
 
-Your compliance policy says one thing.
-Your system does another.
-Between audits, nobody measures the gap.
+Your policy says every production deployment requires approval.
 
-We just released ComplianceDriftDetector v0.1.0-demo — a deterministic engine that compares stated policy claims against actual system behavior and classifies each one as:
+Your CI/CD system says:
+"Mostly."
 
-- **ALIGNED** — policy and behavior match
-- **DRIFTING** — alignment is degrading over time
-- **VIOLATED** — behavior contradicts the policy
-- **UNDECLARED** — system behavior with no governing policy
+That gap is where audits get ugly.
 
-Every report is SHA-256 sealed. Every scoring rule is visible in source. No AI, no blackbox, no hidden logic. Run the verifier on any output — PASS or FAIL.
+Not because people are lazy.
+Not because compliance teams are stupid.
+Because systems drift.
 
-The demo includes a 30-day scenario with 5 policies and 314 evidence points. All 4 drift states demonstrated. 27 automated tests, all passing.
+A policy is written once.
+Workflows change.
+Access exceptions linger.
+Logging coverage drops.
+Approval steps get bypassed "just this once."
+Six months later, nobody knows whether the system still matches the policy.
 
----
+That is the problem ComplianceDriftDetector was built for.
 
-**What this is:** A measurement tool. It tells you where your systems have drifted from your stated policy.
+We released v0.1.1 — a self-service local kit that lets teams compare stated policy claims against observed system behavior and generate a tamper-evident drift report.
 
-**What this is not:** A compliance certificate. It doesn't make you compliant. It shows you where you aren't.
+No cloud upload.
+No credentials.
+No secrets.
+No customer data.
+No production access.
 
----
+Download the ZIP, run it locally, open the HTML report.
 
-We're running 2–3 pilot scans this week.
+It classifies policy claims as:
 
-- You send anonymized policy claims + behavior samples
-- We deliver a sealed drift report in 48 hours
+ALIGNED — behavior matches policy
+DRIFTING — alignment is getting worse over time
+VIOLATED — behavior contradicts policy
+UNDECLARED — system behavior exists with no governing policy
 
-Paid assisted review:
-- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
-- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+This is not a compliance certificate.
+It does not make you SOC 2, ISO 27001, or EU AI Act compliant.
+It does one narrower thing:
 
-After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
+It shows whether your systems still match what your policies say.
 
-If you're a CISO, compliance lead, or AI governance lead preparing for SOC 2, ISO 27001, or EU AI Act readiness — DM me.
+That is the thing many teams only discover when the auditor is already asking.
+
+We are opening 2–3 assisted first-scan reviews this week:
+
+Intro Scan — €149
+Expanded Scan — €299
+
+You can run the tool yourself first. If you want help interpreting the report, mapping findings, or preparing a clean evidence note, that is what the assisted review is for.
+
+If you are a CISO, compliance lead, engineering lead, or AI governance lead and you want to see policy drift before audit day, DM me "drift".
 
 ---
 
 `#compliance` `#governance` `#driftdetection` `#SOC2` `#ISO27001` `#EUAIAct` `#tamperevident` `#infosec`
+
+---
+
+## First Comment
+
+Self-service release:
+https://github.com/RazorglintLabs/ComplianceDriftDetector/releases/tag/v0.1.1-self-service
+
+Paid assisted review links are in the repo README.

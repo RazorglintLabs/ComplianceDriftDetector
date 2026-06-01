@@ -20,7 +20,7 @@
 - Engineering VPs who need proof that policy controls are actually enforced
 - AI governance leads tracking whether AI system controls match documentation
 
-If your organization has written policies but no continuous proof they're followed — this is for you.
+If your organization has written policies but no checkpoint-based evidence they're followed — this is for you.
 
 ---
 
