@@ -49,12 +49,11 @@ It shows whether your systems still match what your policies say.
 
 That is the thing many teams only discover when the auditor is already asking.
 
-We are opening 2–3 assisted first-scan reviews this week:
+Download the local kit. Run it on your machine. If you want updates, support, or commercial/client-facing use, choose a license.
 
-Intro Scan — €149
-Expanded Scan — €299
-
-You can run the tool yourself first. If you want help interpreting the report, mapping findings, or preparing a clean evidence note, that is what the assisted review is for.
+Starter — $49/mo (internal evaluation)
+Team — $149/mo (internal teams, 1 assisted interpretation/month)
+Consultant — $299/mo (client-facing advisory, 2 interpretations/month)
 
 If you are a CISO, compliance lead, engineering lead, or AI governance lead and you want to see policy drift before audit day, DM me "drift".
 
@@ -69,4 +68,4 @@ If you are a CISO, compliance lead, engineering lead, or AI governance lead and 
 Self-service release:
 https://github.com/RazorglintLabs/ComplianceDriftDetector/releases/tag/v0.1.1-self-service
 
-Paid assisted review links are in the repo README.
+License tiers and policies are in the repo README.

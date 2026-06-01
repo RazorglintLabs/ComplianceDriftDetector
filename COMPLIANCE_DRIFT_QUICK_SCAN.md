@@ -8,8 +8,9 @@
 
 | Tier | Price | Scope |
 |------|-------|-------|
-| **Intro Scan** | €149 | 1–3 policy claims, single behavior source |
-| **Expanded Scan** | €299 | Up to 10 policy claims, multiple behavior sources, trend analysis |
+| **Starter License** | $49/mo | Self-service local kit, updates, templates, limited async support |
+| **Team License** | $149/mo | Internal team use, 1 assisted report interpretation/month |
+| **Consultant License** | $299/mo | Client-facing advisory, 2 interpretations/month, Razorglint attribution required |
 
 ---
 
@@ -93,13 +94,21 @@ You verify:   Run verify.py on any artifact — PASS or FAIL
 
 ---
 
-## Paid Assisted Review
+## Monthly Licenses
 
-- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
-- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+Download the local kit. Run it on your machine. If you want updates, support, or commercial/client-facing use, choose a license.
 
-After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
+See `LICENSE_TIERS.md` for full details.
+
+No secrets, credentials, customer PII, or production access required.
+
+## Policies
+
+- [Terms of Service](TERMS_OF_SERVICE.md)
+- [Privacy Policy](PRIVACY_POLICY.md)
+- [Refund and Cancellation Policy](REFUND_AND_CANCELLATION_POLICY.md)
+- [Notice](NOTICE.md)
 
 ## Next Step
 
-Reply with "interested" or reach out directly. We'll send the intake checklist and scope the scan within 24 hours.
+Reply with "interested" or reach out directly. We'll send the intake checklist and scope the review within 24 hours.

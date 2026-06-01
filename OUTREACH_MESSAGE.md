@@ -1,4 +1,4 @@
-# Outreach Messages — Compliance Drift Quick Scan
+# Outreach Messages — ComplianceDriftDetector
 
 ---
 
@@ -12,11 +12,12 @@ Quick question: do you have checkpoint-based evidence that your systems still ma
 
 We built a deterministic drift detector that compares policy claims to actual system behavior and produces a tamper-evident report. No AI, no blackbox, independently verifiable.
 
-Paid assisted review:
-- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
-- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+You can download and run it locally — no cloud, no credentials, no data leaves your machine.
 
-After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
+If you want updates, support, or commercial use:
+- Starter: $49/mo (internal evaluation)
+- Team: $149/mo (internal teams, 1 assisted interpretation/month)
+- Consultant: $299/mo (client-facing advisory)
 
 Interested?
 
@@ -34,13 +35,12 @@ We built ComplianceDriftDetector — a deterministic engine that measures the ga
 
 No AI. No blackbox. Every scoring rule is visible in source. The output is verifiable by anyone with a hash function.
 
-**This week's offer:** Intro scan (1–3 policy claims) for €149. You send anonymized policy excerpts and behavior samples. We deliver a sealed drift report in 48 hours.
+You can download and run it locally for free — no cloud, no credentials, no data leaves your machine.
 
-Paid assisted review:
-- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
-- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
-
-After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
+For ongoing updates, support, and commercial use:
+- Starter: $49/mo — internal evaluation
+- Team: $149/mo — internal teams, 1 assisted report interpretation/month
+- Consultant: $299/mo — client-facing advisory, 2 interpretations/month
 
 This is a detection tool, not a certification claim. It produces evidence you can use during audit preparation — it doesn't replace auditors.
 
@@ -65,7 +65,7 @@ We run a deterministic drift scan: you provide 1–10 policy claims and anonymiz
 
 Not a certification tool. Not AI. Just systematic measurement of whether your systems still match your policies.
 
-€149 intro scan. 48-hour turnaround. No secrets or production credentials required.
+You can run it locally first — free download, no cloud, no credentials. If you want updates, support, or use it with clients, licenses start at $49/mo.
 
 Interested in seeing what drift looks like on real data?
 
@@ -83,7 +83,7 @@ We run a deterministic policy-to-behavior drift analysis. You send us your AI go
 
 No AI in the analysis. Deterministic rules, visible thresholds, independently verifiable output.
 
-€149 for an intro scan (1–3 claims). €299 for expanded (up to 10 claims with trend analysis).
+You can download and run it locally — no cloud, no credentials, no data leaves your machine. If you want updates, templates, support, or permission to use it with clients, licenses start at $49/mo.
 
 This produces readiness evidence — not a compliance certificate. It's what you show to demonstrate continuous monitoring between formal assessments.
 

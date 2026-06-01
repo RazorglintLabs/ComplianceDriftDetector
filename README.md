@@ -140,9 +140,23 @@ This repository is published for evaluation and buyer demonstration. No open-sou
 
 Commercial use, resale, hosted-service use, redistribution, or modified redistribution requires written permission from Razorglint Labs / TCOG Collective LLC.
 
-## Paid Assisted Review
+## Monthly Licenses
 
-- Intro Scan: €149 — [Pay here](https://buy.stripe.com/eVq3cp4yte7GbdKcyb1ZS02)
-- Expanded Scan: €299 — [Pay here](https://buy.stripe.com/9B600d2ql1kUbdK2XB1ZS03)
+| Tier | Price | Best For |
+|---|---:|---|
+| Starter | $49/mo | Solo/internal evaluation |
+| Team | $149/mo | Internal compliance/security teams |
+| Consultant | $299/mo | vCISOs, SOC 2/ISO/GRC consultants |
 
-After payment, send the intake checklist materials. No secrets, credentials, customer PII, or production access required.
+Download the local kit. Run it on your machine. If you want updates, support, or commercial/client-facing use, choose a license.
+
+No secrets, credentials, customer PII, or production access required.
+
+See `LICENSE_TIERS.md` for full details.
+
+## Policies
+
+- [Terms of Service](TERMS_OF_SERVICE.md)
+- [Privacy Policy](PRIVACY_POLICY.md)
+- [Refund and Cancellation Policy](REFUND_AND_CANCELLATION_POLICY.md)
+- [Notice](NOTICE.md)
