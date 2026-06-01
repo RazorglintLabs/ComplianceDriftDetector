@@ -1,0 +1,16 @@
+[project]
+name = "compliance-drift-detector"
+version = "0.1.0"
+description = "Continuous policy-behavior drift detection with tamper-evident proof"
+requires-python = ">=3.11"
+license = {text = "Proprietary — RazorglintLabs"}
+authors = [{name = "RazorglintLabs"}]
+keywords = ["compliance", "drift-detection", "governance", "tamper-evident", "audit"]
+
+[project.scripts]
+drift-demo = "software.run_demo:main"
+drift-verify = "software.verify:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
