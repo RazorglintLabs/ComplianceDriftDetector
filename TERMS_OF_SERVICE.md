@@ -6,9 +6,11 @@ These Terms govern access to and use of ComplianceDriftDetector products, downlo
 
 ## 1. What ComplianceDriftDetector Is
 
-ComplianceDriftDetector is a deterministic policy-to-behavior drift detection tool. It compares stated policy claims against observed behavior evidence and produces tamper-evident readiness evidence.
+ComplianceDriftDetector is a deterministic checkpoint-based drift-detection tool. It compares structured policy claims against supplied structured behavior evidence and produces readable reports plus tamper-evident JSON artifacts.
 
-It is not a compliance certification tool, legal service, audit service, regulatory approval service, or guarantee of compliance.
+The current release expects the operator to supply the policy assertions, evidence mapping, and `compliant` values. It does not automatically parse raw policy documents or infer compliance from raw logs.
+
+It is not a compliance certification tool, legal service, audit service, regulatory approval service, source-data validation service, or guarantee of compliance.
 
 ## 2. Licenses
 
@@ -50,7 +52,7 @@ Access to updates, support, and license rights may end when a subscription is ca
 
 ## 8. No Warranty
 
-The software and services are provided "as is." Razorglint Labs / TCOG Collective LLC does not guarantee detection of all policy violations, audit acceptance, regulatory compliance, or uninterrupted operation.
+The software and services are provided "as is." Razorglint Labs / TCOG Collective LLC does not guarantee detection of all policy violations, source-data completeness, audit acceptance, regulatory compliance, or uninterrupted operation.
 
 ## 9. Limitation of Liability
 
