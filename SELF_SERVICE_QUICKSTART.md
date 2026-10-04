@@ -79,10 +79,10 @@ Reports appear in `output/`:
 ## Step 5: Verify (Optional)
 
 ```
-python software/verify.py
+python software/verify.py output/drift_report.json
 ```
 
-This recalculates all hashes and confirms nothing was modified. Returns PASS or FAIL.
+This recalculates the relevant report structure and hashes and returns PASS or FAIL. To verify the evidence bundle directly, use `python software/verify.py output/drift_evidence.json`.
 
 ---
 
