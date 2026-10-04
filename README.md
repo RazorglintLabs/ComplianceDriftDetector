@@ -83,6 +83,28 @@ Example packs: `examples/template_packs/` (deployment, access, AI logging)
 
 No data leaves your machine. No internet connection required.
 
+## Local Desktop UI
+
+The Sale 01 desktop UI is a thin local shell over the same deterministic engine, report renderers, and independent verifier.
+
+```bash
+python software/ui_app.py
+```
+
+**Windows users:** Double-click `START_UI.bat`.
+
+The four-screen flow is intentionally small:
+
+1. **New Scan** — choose policy and behaviour CSV files
+2. **Results** — review ALIGNED / DRIFTING / VIOLATED / UNDECLARED status
+3. **Evidence Detail** — inspect checkpoint measurements and hashes
+4. **Export & Verify** — open generated reports and independently verify report/evidence artifacts
+
+The UI does not replace or reinterpret the engine. The CLI remains independently runnable.
+
+Frozen design reference: [UI_DESIGN_REFERENCE.md](UI_DESIGN_REFERENCE.md)  
+Editable Figma source: https://www.figma.com/design/0xFZtfAvEbZ0Qenz0rLcMM
+
 ## Run the Demo
 
 ```bash
@@ -106,7 +128,8 @@ Returns PASS or FAIL. No ambiguity.
 ## Requirements
 
 - Python 3.11+
-- Zero external dependencies (stdlib only)
+- Core scanner/verifier: zero external Python dependencies (stdlib only)
+- Desktop UI: Tkinter; included with standard Windows/macOS Python distributions. Some minimal Linux installations may require the system Tk package.
 
 ## Architecture
 
@@ -122,6 +145,8 @@ policy declarations + system behavior + config snapshots + timestamps
                     [ Drift Classifier ] ←── trends + thresholds (visible)
                               ↓
    drift_report.json + drift_report.md + drift_evidence.json
+                              ↑
+            [ optional local desktop UI shell ]
 ```
 
 ## The Key Insight
