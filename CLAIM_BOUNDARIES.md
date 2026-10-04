@@ -18,9 +18,9 @@ Every public statement, README sentence, and buyer communication must stay withi
 | 5 | "All scoring rules visible in source" | AlignmentEngine thresholds are configurable and rendered in output |
 | 6 | "No blackbox scoring" | Classification logic is 3 thresholds, all shown in report |
 | 7 | "Independently verifiable" | verify.py recalculates hashes from artifacts — PASS/FAIL |
-| 8 | "Continuous monitoring between audit points" | Checkpoint-based measurement over time windows |
+| 8 | "Checkpoint-based evidence between audit points" | Checkpoint-based measurement over time windows |
 | 9 | "Identifies undeclared system behaviors" | Evidence with no matching policy claim is surfaced |
-| 10 | "27 automated tests, all PASS" | pytest suite covers all engine paths |
+| 10 | "Current qualified test suite passes in the sealed sale build" | Fresh qualification receipt records the exact candidate and test result |
 
 ## Forbidden Claims
 
@@ -29,8 +29,8 @@ Every public statement, README sentence, and buyer communication must stay withi
 | 1 | "Compliant" | We detect drift, not certify compliance | "Monitors policy-behavior alignment" |
 | 2 | "Certified" | No certification authority involved | "Produces evidence for certification processes" |
 | 3 | "Prevents violations" | Detection only, not enforcement | "Detects violations when they occur" |
-| 4 | "Real-time monitoring" | Batch checkpoint analysis | "Continuous checkpoint-based monitoring" |
-| 5 | "Replaces audits" | Supplements, not replaces | "Provides continuous evidence between audits" |
+| 4 | "Real-time monitoring" | Batch checkpoint analysis | "Checkpoint-based longitudinal drift analysis" |
+| 5 | "Replaces audits" | Supplements, not replaces | "Provides evidence between audit points" |
 | 6 | "Guaranteed" | No guarantees on detection completeness | "Systematic measurement against declared policy" |
 | 7 | "AI-powered" | No ML, no LLM, no AI — deterministic rules only | "Deterministic rule-based analysis" |
 | 8 | "Tamper-proof" | Hash sealing is tamper-evident, not tamper-proof | "Tamper-evident" |
