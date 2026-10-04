@@ -4,9 +4,18 @@
 
 ## What You Provide
 
-### 1. Policy Claims (Required)
+### 1. Structured Policy Claims (Required)
 
-Testable policy statements your organization enforces. Examples:
+The self-service release expects policy claims in `policy_claims.csv` using the repository template.
+
+Required fields include:
+- `claim_id`
+- `description`
+- `testable_assertion`
+
+Optional fields include claim type and threshold metadata.
+
+Example claims:
 
 | Example Claim | Type |
 |---------------|------|
@@ -16,25 +25,27 @@ Testable policy statements your organization enforces. Examples:
 | "Incident response starts within 4 hours of detection" | THRESHOLD |
 | "All code changes pass automated security scan" | REQUIREMENT |
 
-**Format:** Plain text, bullet list, or table. 1–3 claims for intro scan, up to 10 for expanded.
+The current release does **not** parse natural-language policy documents automatically. An assisted review may help normalize claims into the CSV format if that service is explicitly agreed.
 
-### 2. Behavior Evidence (Required)
+### 2. Structured Behavior Evidence (Required)
 
-Anonymized system behavior data showing what actually happened. Examples:
+The self-service release expects `behavior_evidence.csv` using the repository template.
 
-| Evidence Type | What To Send |
-|---------------|-------------|
-| Deployment logs | Timestamps, approval status (approved/unapproved), deployer role |
-| Access records | Session durations, privilege levels, access type |
-| Monitoring logs | Coverage percentages, logging gaps, timestamps |
-| Workflow outputs | Response times, completion status, gate results |
-| Config snapshots | Control states at different points in time |
+Each evidence row includes:
+- `evidence_id`
+- `timestamp`
+- `claim_ref`
+- `observed_value`
+- `compliant` (`true` / `false`)
+- optional `source`
 
-**Format:** JSON, CSV, or structured text. One row per observation.
+The `compliant` value is supplied by the operator. The current release does **not** infer compliance from raw logs.
 
-### 3. Time Window (Required)
+Examples of source material that an operator may normalize into evidence rows include deployment records, access records, logging measurements, workflow outputs, or configuration observations.
 
-How many days/weeks of data to analyze. Minimum: 7 days. Recommended: 14–30 days.
+### 3. Time Window
+
+Evidence can cover one or more dated checkpoints. A single checkpoint can be classified, but trend output will be `insufficient_data`. Multiple dated checkpoints are needed to show improving / stable / degrading direction.
 
 ---
 
@@ -42,28 +53,28 @@ How many days/weeks of data to analyze. Minimum: 7 days. Recommended: 14–30 da
 
 | Never Send | Why |
 |-----------|-----|
-| Production credentials | Not needed — we analyze behavior data, not live systems |
-| API keys or tokens | Not needed |
-| Customer PII | Remove before sending — we need behavior patterns, not identities |
-| Unredacted names/emails | Anonymize with roles (e.g., "deployer_A", "admin_B") |
-| Source code | Not needed |
-| Full database dumps | Not needed — send relevant log excerpts only |
-| Secrets or certificates | Never |
+| Production credentials | Not required |
+| API keys or tokens | Not required |
+| Customer PII | Remove before any assisted review |
+| Unredacted names/emails | Anonymize when identity is not required for the claim |
+| Source code | Not required by the standard workflow |
+| Full database dumps | Not required |
+| Secrets or certificates | Never required |
 
 ---
 
 ## Anonymization Guide
 
-Before sending behavior data:
+Before sending material for an assisted review:
 
-1. Replace real names with roles: `"john.smith"` → `"deployer_A"`
-2. Replace real system names if sensitive: `"prod-db-01"` → `"system_A"`
-3. Keep timestamps intact (we need time ordering)
-4. Keep boolean/numeric values intact (we need compliance signal)
-5. Remove IP addresses unless relevant to the policy claim
-6. Remove any field you're uncomfortable sharing
+1. Replace real names with roles where identity is not relevant.
+2. Replace sensitive system names with neutral identifiers where possible.
+3. Preserve timestamps when time ordering matters.
+4. Preserve the boolean/numeric values needed for the selected claim.
+5. Remove IP addresses and unrelated identifiers unless they are necessary for the claim being evaluated.
+6. Remove any field that is not required for the scoped analysis.
 
-**Rule:** If removing a field doesn't break the compliance signal, remove it.
+**Rule:** minimize the data to the narrow evidence needed for the selected claim.
 
 ---
 
@@ -71,27 +82,35 @@ Before sending behavior data:
 
 | In Scope | Out of Scope |
 |----------|-------------|
-| Policy-behavior alignment measurement | Penetration testing |
-| Drift trend analysis over time | Vulnerability scanning |
-| Undeclared behavior detection | Code review |
-| Tamper-evident report generation | Architecture assessment |
-| Evidence export for auditors | Remediation implementation |
+| Structured policy-behavior alignment measurement | Penetration testing |
+| Checkpoint trend analysis | Vulnerability scanning |
+| Surfacing unmatched `UNDECLARED-` behavior references | General anomaly discovery |
+| Tamper-evident report/evidence artifacts | Architecture assessment |
+| Exportable evidence for review workflows | Remediation implementation |
 
-We measure drift. We don't fix it, and we don't assess your overall security posture.
-
----
-
-## Delivery
-
-| Step | Timeline |
-|------|----------|
-| You send intake materials | Day 0 |
-| We confirm scope and acceptance | Within 24 hours |
-| We run analysis and deliver report | Within 48 hours of acceptance |
-| You receive: drift report (MD + JSON) + evidence export + verifier | Day 2–3 |
+The tool measures supplied structured evidence. It does not fix drift, establish overall security posture, certify compliance, or validate the truth/completeness of the source data.
 
 ---
 
-## Ready?
+## Assisted Review Workflow
 
-Send your policy claims and anonymized behavior data to begin. We'll confirm scope and timeline within 24 hours.
+If an assisted review is separately agreed:
+
+1. Scope the claims and accepted input format.
+2. Confirm that submitted material is appropriately minimized/redacted.
+3. Normalize accepted material into the supported structured format where agreed.
+4. Run the local detector and verifier.
+5. Return the agreed report/evidence artifacts and interpretation.
+
+Any delivery timeline or support commitment should be agreed in writing for that engagement; this checklist does not create a fixed service-level commitment.
+
+---
+
+## Self-Service Path
+
+For the current product workflow, start with:
+
+- `SELF_SERVICE_QUICKSTART.md`
+- `input_templates/policy_claims.csv`
+- `input_templates/behavior_evidence.csv`
+- `examples/template_packs/`
