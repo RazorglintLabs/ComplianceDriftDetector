@@ -6,7 +6,6 @@ HTML report generation, and run_scan integration.
 """
 
 import csv
-import sys
 from pathlib import Path
 
 import pytest
@@ -147,7 +146,6 @@ class TestTemplatePacks:
         assert len(policies) > 0
         assert len(evidence) > 0
 
-        # Run through detector
         det = ComplianceDriftDetector()
         det.load_policies(policies)
         det.load_behavior(evidence)
@@ -182,8 +180,9 @@ class TestHtmlReport:
 
         html = render_html_report(report)
         assert "not</strong> a compliance certification" in html
-        assert "audit preparation" in html
-        assert "No data left your machine" in html
+        assert "does <strong>not</strong> validate the truth" in html
+        assert "does <strong>not</strong> infer compliance from raw logs" in html
+        assert "Verify exported evidence with" in html
 
     def test_html_escapes_dangerous_input(self):
         det = ComplianceDriftDetector()
