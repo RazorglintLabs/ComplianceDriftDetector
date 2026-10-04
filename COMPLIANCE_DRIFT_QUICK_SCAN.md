@@ -1,6 +1,6 @@
 # Compliance Drift Quick Scan
 
-**One policy-to-system drift analysis. Tamper-evident report. Delivered in 48 hours.**
+**One policy-to-system drift analysis. Local, deterministic, tamper-evident artifacts.**
 
 ---
 
@@ -20,54 +20,56 @@
 
 ## Who This Is For
 
-- Compliance leads who suspect their systems have drifted from stated policy
-- CISOs preparing for SOC 2 Type II, ISO 27001, or EU AI Act readiness audits
-- Engineering VPs who need proof that policy controls are actually enforced
-- AI governance leads tracking whether AI system controls match documentation
+- Compliance leads who want structured evidence of policy-behavior drift
+- CISOs preparing for SOC 2, ISO 27001, or other readiness reviews
+- Engineering leaders comparing stated controls with supplied operating evidence
+- AI governance leads tracking whether documented controls still match supplied evidence
 
-If your organization has written policies but no checkpoint-based evidence they're followed — this is for you.
-
----
-
-## What You Send Us
-
-1. **Policy excerpt** — 1–10 testable policy statements (e.g., "All deployments require approval," "No persistent admin access," "AI outputs are logged")
-2. **Behavior sample** — Anonymized system behavior evidence (e.g., deployment logs, access records, config snapshots, workflow outputs)
-3. **Time window** — How many days/weeks of behavior data to analyze
-
-We provide a secure intake form. No production credentials, no customer PII, no secrets required.
+If your organization has written policies but lacks checkpoint-based alignment evidence, this is the problem the detector is designed to measure.
 
 ---
 
-## What We Deliver
+## What You Provide
+
+1. **Policy claims** — 1–10 structured, testable assertions (for example: "All deployments require approval")
+2. **Behavior evidence** — dated, anonymized observations mapped to those claims
+3. **Compliance flag** — a supplied true/false value for each evidence record
+4. **Time window** — the dated checkpoints you want compared
+
+No production credentials, customer PII, or secrets are required by the workflow.
+
+The current release does **not** automatically parse natural-language policies or infer compliance from raw logs.
+
+---
+
+## What It Produces
 
 | Deliverable | Format |
 |-------------|--------|
-| Drift report | Markdown + JSON (tamper-evident, SHA-256 sealed) |
-| Per-claim alignment analysis | Score, trend, drift state (ALIGNED / DRIFTING / VIOLATED) |
-| Undeclared behavior detection | System behaviors with no matching policy |
-| Evidence export | Hash-verified evidence set for independent validation |
-| Verification tool | Standalone script to re-verify all outputs |
-
-**Delivery:** 48 hours from intake acceptance.
+| Drift report | Markdown + JSON + HTML |
+| Per-claim analysis | Score, trend, drift state (ALIGNED / DRIFTING / VIOLATED / UNDECLARED) |
+| Undeclared behavior findings | Unmatched `UNDECLARED-` behavior references |
+| Evidence export | Complete policy/evidence set with per-item and aggregate hashes |
+| Verification tool | PASS/FAIL checks for supported JSON artifacts |
 
 ---
 
-## What This Proves
+## What The Output Shows
 
-- Whether your stated policies match your observed system behavior
-- Which specific claims are drifting and in which direction
-- How alignment has changed over the sampled time window
-- Whether undeclared behaviors exist (activity with no governing policy)
-- That the analysis is tamper-evident and independently verifiable
+- Whether supplied evidence meets the configured alignment threshold for each claim
+- Which claims are drifting and in which direction across supplied checkpoints
+- The earliest supplied checkpoint where alignment falls below the configured threshold
+- Whether undeclared behavior references are present
+- Whether supported JSON artifacts pass the included consistency/hash checks
 
-## What This Does NOT Prove
+## What It Does NOT Establish
 
-- This is **not** a compliance certification
-- This does **not** make you SOC 2 / ISO 27001 / EU AI Act compliant
-- This does **not** guarantee detection of all policy violations
-- This does **not** replace a formal audit by an accredited body
-- This does **not** assess policy quality — only policy-behavior alignment
+- It is **not** a compliance certification
+- It does **not** make an organization compliant with any standard or regulation
+- It does **not** guarantee detection of all policy violations
+- It does **not** replace a formal audit or accredited assessment
+- It does **not** validate the truth, completeness, or provenance of supplied source data
+- It does **not** assess policy quality; it measures alignment against supplied structured claims/evidence
 
 ---
 
@@ -76,24 +78,25 @@ We provide a secure intake form. No production credentials, no customer PII, no 
 | We Say | We Don't Say |
 |--------|--------------|
 | "Drift detection" | "Compliance assurance" |
-| "Evidence for auditors" | "Replaces auditors" |
+| "Evidence for audit preparation" | "Replaces auditors" |
 | "Tamper-evident" | "Tamper-proof" |
 | "Readiness evidence" | "Certification" |
 | "Deterministic analysis" | "AI-powered" |
-| "Monitors alignment" | "Guarantees compliance" |
+| "Checkpoint-based" | "Real-time" |
+| "Supplied behavior evidence" | "Automatically observed production behavior" |
 
 ---
 
 ## How It Works
 
-```
-You provide:  Policy claims + behavior evidence (anonymized)
+```text
+You provide:  structured policy claims + behavior evidence
                           ↓
-We run:       ComplianceDriftDetector engine (deterministic, no AI, no blackbox)
+Tool runs:    checkpoint measurement + visible threshold classification
                           ↓
-We deliver:   Sealed drift report + evidence export + verification tool
+Tool writes:  drift report + evidence export
                           ↓
-You verify:   Run verify.py on any artifact — PASS or FAIL
+You verify:   report seal/consistency + all exported item/aggregate hashes
 ```
 
 ---
@@ -104,8 +107,6 @@ Download the local kit. Run it on your machine. If you want updates, support, or
 
 See `LICENSE_TIERS.md` for full details.
 
-No secrets, credentials, customer PII, or production access required.
-
 ## Policies
 
 - [Terms of Service](TERMS_OF_SERVICE.md)
@@ -115,4 +116,4 @@ No secrets, credentials, customer PII, or production access required.
 
 ## Next Step
 
-Reply with "interested" or reach out directly. We'll send the intake checklist and scope the review within 24 hours.
+Use the self-service templates in the repository or request the intake checklist for an assisted review.

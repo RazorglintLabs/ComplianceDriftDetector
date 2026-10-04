@@ -6,7 +6,7 @@ Produces a single self-contained HTML file with:
 - Drift state table
 - Per-claim analysis
 - Verification hash section
-- What this proves / does not prove
+- Explicit claim boundaries
 
 No JavaScript required. No external resources.
 """
@@ -68,7 +68,7 @@ def render_html_report(report: DriftReport) -> str:
     if report.undeclared_behaviors:
         undeclared_section = f"""
     <h2>Undeclared Behaviors</h2>
-    <p>System behaviors detected with no governing policy claim:</p>
+    <p>Supplied behavior references marked <code>UNDECLARED-</code> with no matching policy claim:</p>
     <table>
         <tr><th>Pattern</th><th>Count</th><th>First Seen</th><th>Last Seen</th></tr>
 {undeclared_rows}
@@ -124,39 +124,42 @@ code {{ background: #eff1f3; padding: 0.15rem 0.4rem; border-radius: 3px; font-s
 <h2>Thresholds Used</h2>
 <table>
     <tr><th>Parameter</th><th>Value</th><th>Meaning</th></tr>
-    <tr><td>Alignment threshold</td><td>{thresholds.get('alignment', 0.95):.0%}</td><td>Score above this = ALIGNED</td></tr>
+    <tr><td>Alignment threshold</td><td>{thresholds.get('alignment', 0.95):.0%}</td><td>Score at or above this = ALIGNED</td></tr>
     <tr><td>Violation threshold</td><td>{thresholds.get('violation', 0.70):.0%}</td><td>Score below this = VIOLATED</td></tr>
-    <tr><td>Drift sensitivity</td><td>{thresholds.get('drift_sensitivity', 0.05):.0%}</td><td>Minimum change to detect trend</td></tr>
+    <tr><td>Drift sensitivity</td><td>{thresholds.get('drift_sensitivity', 0.05):.0%}</td><td>Minimum first-to-last score change to classify a trend</td></tr>
 </table>
 
 <h2>Verification</h2>
-<p>This report is tamper-evident. Any modification breaks the hash chain.</p>
+<p>The report hash seals generated metadata, input hashes, totals, and summary values. The evidence export contains per-item and aggregate hashes.</p>
 <table>
     <tr><td>Report hash</td><td class="hash">{_escape(report.report_hash)}</td></tr>
     <tr><td>Policy hash</td><td class="hash">{_escape(report.policy_hash)}</td></tr>
     <tr><td>Behavior hash</td><td class="hash">{_escape(report.behavior_hash)}</td></tr>
 </table>
-<p>Verify with: <code>python software/verify.py output/drift_report.json</code></p>
+<p>Verify report JSON with: <code>python software/verify.py output/drift_report.json</code></p>
+<p>Verify exported evidence with: <code>python software/verify.py output/drift_evidence.json</code></p>
 
 <div class="boundary">
-<h3>What This Report Proves</h3>
+<h3>What This Report Shows</h3>
 <ul>
-    <li>Whether stated policies match observed system behavior at each checkpoint</li>
-    <li>Which claims are drifting and in which direction</li>
-    <li>That the analysis is tamper-evident and independently verifiable</li>
+    <li>How supplied behavior evidence compares with structured policy claims at dated checkpoints</li>
+    <li>Which claims meet or fall below the configured alignment and violation thresholds</li>
+    <li>Trend direction across the supplied checkpoints</li>
+    <li>The earliest supplied checkpoint where alignment falls below the configured alignment threshold</li>
 </ul>
-<h3>What This Report Does NOT Prove</h3>
+<h3>What This Report Does NOT Establish</h3>
 <ul>
     <li>This is <strong>not</strong> a compliance certification</li>
-    <li>This does <strong>not</strong> make you compliant with any standard</li>
-    <li>This does <strong>not</strong> replace a formal audit by an accredited body</li>
-    <li>This produces evidence for audit preparation — not regulatory approval</li>
+    <li>This does <strong>not</strong> establish compliance with any standard or regulation</li>
+    <li>This does <strong>not</strong> validate the truth, completeness, or provenance of supplied source data</li>
+    <li>This does <strong>not</strong> replace a formal audit or accredited assessment</li>
+    <li>The current release does <strong>not</strong> infer compliance from raw logs or parse policy documents automatically</li>
 </ul>
 </div>
 
 <p style="color:#6e7781;font-size:0.8rem;margin-top:3rem;border-top:1px solid #d1d9e0;padding-top:1rem;">
-ComplianceDriftDetector — Checkpoint-based policy-behavior drift detection.<br>
-No data left your machine. Deterministic analysis. No AI. No blackbox.
+ComplianceDriftDetector — Checkpoint-based policy-behavior drift detection over supplied structured evidence.<br>
+Local deterministic analysis. No AI or blackbox scoring.
 </p>
 
 </body>

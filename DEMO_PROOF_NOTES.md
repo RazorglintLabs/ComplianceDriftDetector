@@ -1,5 +1,7 @@
 # Demo Proof Notes — ComplianceDriftDetector v0.1.0-demo
 
+> **Historical release receipt.** This file records the original `v0.1.0-demo` state from 2026-06-01. It is not the current Sale 01 qualification receipt and should not be used as the current test count.
+
 ---
 
 ## Release Record
@@ -13,13 +15,13 @@
 | Tests | 27/27 PASS |
 | Test time | 0.07s |
 | Python | 3.12.10 |
-| Dependencies | Zero (stdlib-only) |
+| Dependencies | Zero external Python packages (stdlib-only core) |
 
 ---
 
-## Test Results
+## Historical Test Results
 
-```
+```text
 tests/test_drift_detector.py::TestSha256::test_deterministic PASSED
 tests/test_drift_detector.py::TestSha256::test_different_inputs PASSED
 tests/test_drift_detector.py::TestSha256::test_lowercase_hex PASSED
@@ -55,20 +57,21 @@ tests/test_drift_detector.py::TestComplianceDriftDetector::test_export_evidence 
 
 ## Demo Outputs
 
-Running `python software/run_demo.py` produces:
+Running `python software/run_demo.py` writes to the repository-root `output/` directory:
 
 | File | Purpose |
 |------|---------|
-| `software/output/drift_report.json` | Machine-readable drift report (sealed) |
-| `software/output/drift_report.md` | Human-readable markdown report |
-| `software/output/drift_evidence.json` | Full evidence export with per-item hashes |
-| `software/output/input_data.json` | Input data for reproducibility |
+| `output/drift_report.json` | Machine-readable drift report |
+| `output/drift_report.md` | Human-readable markdown report |
+| `output/drift_report.html` | Browser-readable report |
+| `output/drift_evidence.json` | Full evidence export with per-item hashes |
+| `output/input_data.json` | Synthetic demo input summary for reproducibility |
 
 ### Demo Scenario
 
-- **5 policy claims** monitored over **30 simulated days**
-- **314 evidence points** generated
-- All 4 drift states demonstrated:
+- **5 policy claims** over **30 simulated days**
+- **314 synthetic evidence points** generated
+- All 4 claim states / undeclared behavior concepts demonstrated:
 
 | Policy | Outcome | State |
 |--------|---------|-------|
@@ -77,28 +80,30 @@ Running `python software/run_demo.py` produces:
 | POL-003: PII logging >= 99% | Stays above 99.1% | ALIGNED |
 | POL-004: Incident response <= 4 hours | Creeps from 1.5h to 4.5h | VIOLATED |
 | POL-005: AI output logging | 100% throughout | ALIGNED |
-| (undeclared) | Automated rollbacks detected | UNDECLARED |
+| (undeclared behavior finding) | Automated rollback reference has no matching policy | UNDECLARED finding |
 
 ---
 
-## What The Demo Proves
+## What The Historical Demo Demonstrates
 
-- The engine ingests policy claims and behavior evidence
+- The engine ingests structured policy claims and structured behavior evidence
 - It groups evidence into daily checkpoints and measures alignment
-- It classifies drift state using visible, configurable thresholds
-- It detects trend direction (improving / stable / degrading)
-- It identifies undeclared system behaviors
-- It seals reports with SHA-256 for tamper evidence
-- The standalone verifier (`verify.py`) confirms artifact integrity
-- Same inputs produce same outputs (deterministic)
-- Zero external dependencies (stdlib-only)
+- It classifies claim state using visible thresholds
+- It detects first-to-last trend direction (improving / stable / degrading)
+- It surfaces specially marked undeclared behavior references
+- It emits report/input hashes and an evidence export with per-item hashes
+- The verifier can check supported JSON artifact consistency
+- For the same ordered structured inputs and thresholds, semantic classification and input hashes are deterministic
+- The core engine uses zero external Python packages
 
-## What The Demo Does NOT Prove
+## What The Historical Demo Does NOT Establish
 
 - Production scalability (demo uses in-memory processing)
 - Real-world policy coverage (demo uses synthetic data)
+- Truth, completeness, or provenance of supplied source evidence
+- Automatic policy parsing or compliance inference from raw logs
 - Integration with live monitoring systems
 - Multi-tenant operation
 - Authentication or access control
 - Long-term storage or database persistence
-- Regulatory compliance of any kind
+- Regulatory compliance, certification, or audit acceptance of any kind

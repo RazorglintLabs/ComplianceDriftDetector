@@ -31,7 +31,7 @@ For SaaS teams, GRC teams, small security teams.
 - Monthly template updates
 - 1 assisted report interpretation per month
 - Priority support
-- Permission to use reports internally for audit prep
+- Permission to use reports internally for audit preparation
 
 [Subscribe — $149/mo](https://buy.stripe.com/fZubIVe934x61DadCf1ZS07)
 
@@ -47,11 +47,13 @@ For GRC consultants, SOC 2 consultants, ISO consultants, vCISOs.
 
 [Subscribe — $299/mo](https://buy.stripe.com/14AdR39SNgfOepW8hV1ZS06)
 
-## Boundaries
+## Product Boundaries
 
-This software provides deterministic policy-to-behavior drift detection and tamper-evident readiness evidence.
+The current release performs deterministic checkpoint-based comparison of structured policy claims and supplied behavior evidence. The operator supplies the policy assertions, evidence mapping, and `compliant` values; the tool does not automatically parse raw policies or infer compliance from raw logs.
 
-It does not provide compliance certification, legal advice, audit certification, regulatory approval, or guaranteed violation detection.
+It produces readable reports plus supported JSON artifacts with tamper-evident hashes and an included verifier.
+
+It does not provide compliance certification, legal advice, audit certification, regulatory approval, source-data validation, or guaranteed violation detection.
 
 Commercial use beyond the selected tier requires written permission from Razorglint Labs / TCOG Collective LLC.
 

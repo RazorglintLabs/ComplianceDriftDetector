@@ -8,11 +8,11 @@
 
 Hi [Name],
 
-Quick question: do you have checkpoint-based evidence that your systems still match your stated compliance policies between audits — or do you only find out at audit time?
+Quick question: do you have checkpoint-based evidence showing whether supplied operating data still matches your stated policies between formal reviews?
 
-We built a deterministic drift detector that compares policy claims to actual system behavior and produces a tamper-evident report. No AI, no blackbox, independently verifiable.
+We built a deterministic drift detector that compares structured policy claims with supplied behavior evidence and produces tamper-evident JSON artifacts plus readable reports. No AI, no blackbox scoring, and supported JSON artifacts can be checked with the included verifier.
 
-You can download and run it locally — no cloud, no credentials, no data leaves your machine.
+It runs locally — no cloud service or production credentials required.
 
 If you want updates, support, or commercial use:
 - Starter: [$49/mo, 7-day free trial](https://buy.stripe.com/cNi5kxghbd3CbdKfKn1ZS08)
@@ -25,26 +25,24 @@ Interested?
 
 ## Email — Slightly Longer Version
 
-**Subject:** The gap between your policy and your system — measured, not guessed
+**Subject:** The gap between policy and supplied operating evidence — measured, not guessed
 
 Hi [Name],
 
-Most compliance programs check alignment at audit time. Between audits, systems drift: approvals get skipped, access lingers, thresholds creep. Nobody notices until the next review.
+Between formal reviews, systems and workflows can change. Approval steps may be bypassed, access may linger, or logging coverage may fall. Unless policy claims and operating evidence are compared across checkpoints, that drift can be easy to miss.
 
-We built ComplianceDriftDetector — a deterministic engine that measures the gap between stated policy and observed system behavior. It classifies each policy claim as ALIGNED, DRIFTING, or VIOLATED, tracks the trend over time, and seals the report with SHA-256 hashes for independent verification.
+ComplianceDriftDetector is a deterministic local engine that measures the gap between structured policy claims and supplied behavior evidence. It classifies each claim as ALIGNED, DRIFTING, VIOLATED, or UNDECLARED, tracks checkpoint trends, and emits tamper-evident artifacts.
 
-No AI. No blackbox. Every scoring rule is visible in source. The output is independently verifiable with the included verifier.
+No AI. No blackbox scoring. Classification thresholds are visible in source. The included verifier checks report-seal consistency plus every exported item and aggregate evidence hash.
 
-You can download and run it locally for evaluation — no cloud, no credentials, no data leaves your machine.
+The tool runs locally for evaluation — no cloud service or production credentials required.
 
 For ongoing updates, support, and commercial use:
 - Starter: $49/mo — internal evaluation
 - Team: $149/mo — internal teams, 1 assisted report interpretation/month
 - Consultant: $299/mo — client-facing advisory, 2 interpretations/month
 
-This is a detection tool, not a certification claim. It produces evidence you can use during audit preparation — it doesn't replace auditors.
-
-If you're preparing for SOC 2 Type II, ISO 27001 renewal, or EU AI Act readiness — this gives you checkpoint-based alignment evidence between audit points.
+This is a drift-detection tool, not a certification claim. It can support audit-preparation or internal control-review workflows; it does not replace auditors or establish regulatory compliance.
 
 Reply if you'd like the intake checklist.
 
@@ -55,36 +53,34 @@ Best,
 
 ## CISO / Compliance Lead Version
 
-**Subject:** Checkpoint-based policy-behavior evidence between SOC 2 audits
+**Subject:** Checkpoint-based policy-behavior evidence between formal reviews
 
 Hi [Name],
 
-Between Type II audit windows, how do you demonstrate that your controls are still reflected in observed operating evidence?
+How do you show whether your documented controls are still reflected in the operating evidence you collect between formal reviews?
 
-We run a deterministic drift scan: you provide 1–10 policy claims and anonymized system behavior (deployment logs, access records, config snapshots). We deliver a tamper-evident report classifying each claim as ALIGNED, DRIFTING, or VIOLATED — with trend analysis and hash-sealed evidence.
+ComplianceDriftDetector runs a deterministic drift scan over structured policy claims and supplied evidence such as deployment records, access records, or configuration observations. It produces per-claim alignment states, checkpoint trends, undeclared-behavior findings, and tamper-evident JSON artifacts.
 
-Not a certification tool. Not AI. Just systematic measurement of whether supplied system evidence still matches declared policy.
+Not a certification tool. Not AI. It is a narrow measurement layer for supplied structured evidence.
 
-You can run it locally first — evaluation download, no cloud, no credentials. If you want updates, support, or use it with clients, licenses start at $49/mo.
+It can be run locally first with sample or anonymized data. No cloud service or production credentials are required.
 
-Interested in seeing what drift looks like on sample or anonymized data?
+Interested in seeing the example workflow?
 
 ---
 
 ## AI Governance Lead Version
 
-**Subject:** Compare AI system controls with documented policy
+**Subject:** Compare documented AI controls with supplied operating evidence
 
 Hi [Name],
 
-For AI governance programs preparing around risk-management, logging, and monitoring expectations — the question isn't whether you have policies. It's whether your supplied operating evidence still matches them.
+For AI governance programs, one useful question is whether the operating evidence you collect still matches your documented control claims.
 
-We run a deterministic policy-to-behavior drift analysis. You provide AI governance claims (e.g., "all model outputs are logged," "human review occurs before deployment," "bias checks run weekly") and anonymized evidence. The report shows which claims are aligned, which are drifting, and which are violated.
+ComplianceDriftDetector performs deterministic policy-to-behavior drift analysis over structured claims and supplied evidence. Example claims might include output logging, human review before deployment, or scheduled control checks. The report shows which supplied claims are aligned, drifting, violated, or missing mapped evidence.
 
-No AI in the analysis. Deterministic rules, visible thresholds, independently verifiable output.
+No AI is used in the analysis. Thresholds are visible and supported JSON artifacts are independently checkable with the included verifier.
 
-You can download and run it locally — no cloud, no credentials, no data leaves your machine. If you want updates, templates, support, or permission to use it with clients, licenses start at $49/mo.
-
-This produces readiness evidence — not a compliance certificate. It gives you checkpoint-based evidence between formal assessments.
+It runs locally. This produces readiness evidence, not a compliance certificate or regulatory determination.
 
 Reply for the intake checklist.
