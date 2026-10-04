@@ -33,9 +33,9 @@ Most compliance programs check alignment at audit time. Between audits, systems 
 
 We built ComplianceDriftDetector — a deterministic engine that measures the gap between stated policy and observed system behavior. It classifies each policy claim as ALIGNED, DRIFTING, or VIOLATED, tracks the trend over time, and seals the report with SHA-256 hashes for independent verification.
 
-No AI. No blackbox. Every scoring rule is visible in source. The output is verifiable by anyone with a hash function.
+No AI. No blackbox. Every scoring rule is visible in source. The output is independently verifiable with the included verifier.
 
-You can download and run it locally for free — no cloud, no credentials, no data leaves your machine.
+You can download and run it locally for evaluation — no cloud, no credentials, no data leaves your machine.
 
 For ongoing updates, support, and commercial use:
 - Starter: $49/mo — internal evaluation
@@ -55,36 +55,36 @@ Best,
 
 ## CISO / Compliance Lead Version
 
-**Subject:** Continuous policy-behavior proof between SOC 2 audits
+**Subject:** Checkpoint-based policy-behavior evidence between SOC 2 audits
 
 Hi [Name],
 
-Between Type II audit windows, how do you prove your controls are still enforced?
+Between Type II audit windows, how do you demonstrate that your controls are still reflected in observed operating evidence?
 
 We run a deterministic drift scan: you provide 1–10 policy claims and anonymized system behavior (deployment logs, access records, config snapshots). We deliver a tamper-evident report classifying each claim as ALIGNED, DRIFTING, or VIOLATED — with trend analysis and hash-sealed evidence.
 
-Not a certification tool. Not AI. Just systematic measurement of whether your systems still match your policies.
+Not a certification tool. Not AI. Just systematic measurement of whether supplied system evidence still matches declared policy.
 
-You can run it locally first — free download, no cloud, no credentials. If you want updates, support, or use it with clients, licenses start at $49/mo.
+You can run it locally first — evaluation download, no cloud, no credentials. If you want updates, support, or use it with clients, licenses start at $49/mo.
 
-Interested in seeing what drift looks like on real data?
+Interested in seeing what drift looks like on sample or anonymized data?
 
 ---
 
 ## AI Governance Lead Version
 
-**Subject:** Prove your AI system controls match your documentation
+**Subject:** Compare AI system controls with documented policy
 
 Hi [Name],
 
-For AI governance programs preparing around EU AI Act risk-management, logging, and monitoring expectations — the question isn't whether you have policies. It's whether your systems still follow them.
+For AI governance programs preparing around risk-management, logging, and monitoring expectations — the question isn't whether you have policies. It's whether your supplied operating evidence still matches them.
 
-We run a deterministic policy-to-behavior drift analysis. You send us your AI governance claims (e.g., "all model outputs are logged," "human review occurs before deployment," "bias checks run weekly") and anonymized evidence. We deliver a sealed report showing which claims are holding, which are drifting, and which are violated.
+We run a deterministic policy-to-behavior drift analysis. You provide AI governance claims (e.g., "all model outputs are logged," "human review occurs before deployment," "bias checks run weekly") and anonymized evidence. The report shows which claims are aligned, which are drifting, and which are violated.
 
 No AI in the analysis. Deterministic rules, visible thresholds, independently verifiable output.
 
 You can download and run it locally — no cloud, no credentials, no data leaves your machine. If you want updates, templates, support, or permission to use it with clients, licenses start at $49/mo.
 
-This produces readiness evidence — not a compliance certificate. It's what you show to demonstrate continuous monitoring between formal assessments.
+This produces readiness evidence — not a compliance certificate. It gives you checkpoint-based evidence between formal assessments.
 
 Reply for the intake checklist.
