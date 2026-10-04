@@ -38,9 +38,9 @@ def render_markdown_report(report: DriftReport) -> str:
     if thresholds:
         lines.append("### Thresholds (visible — no hidden scoring)")
         lines.append("")
-        lines.append(f"- Alignment threshold: **{thresholds.get('alignment', 0.95):.0%}** (above = ALIGNED)")
+        lines.append(f"- Alignment threshold: **{thresholds.get('alignment', 0.95):.0%}** (at or above = ALIGNED)")
         lines.append(f"- Violation threshold: **{thresholds.get('violation', 0.70):.0%}** (below = VIOLATED)")
-        lines.append(f"- Drift sensitivity: **{thresholds.get('drift_sensitivity', 0.05):.0%}** (minimum trend delta)")
+        lines.append(f"- Drift sensitivity: **{thresholds.get('drift_sensitivity', 0.05):.0%}** (minimum first-to-last trend delta)")
         lines.append("")
 
     state_counts = report.summary.get("state_counts", {})
@@ -50,10 +50,10 @@ def render_markdown_report(report: DriftReport) -> str:
         lines.append("| State | Count | Meaning |")
         lines.append("|-------|-------|---------|")
         meanings = {
-            "ALIGNED": "Policy matches behavior — evidence confirms",
-            "DRIFTING": "Behavior diverging from policy — trend detected",
-            "VIOLATED": "Clear evidence contradicts policy",
-            "UNDECLARED": "No evidence found for this claim",
+            "ALIGNED": "Latest supplied evidence meets the alignment threshold",
+            "DRIFTING": "Latest alignment is below the alignment threshold but above the violation threshold",
+            "VIOLATED": "Latest alignment is below the violation threshold",
+            "UNDECLARED": "No mapped evidence was supplied for this claim",
         }
         for state, count in sorted(state_counts.items()):
             lines.append(f"| {state} | {count} | {meanings.get(state, '')} |")
@@ -81,7 +81,7 @@ def render_markdown_report(report: DriftReport) -> str:
         lines.append(f"- **Reason:** {analysis.reason}")
 
         if analysis.first_drift_time:
-            lines.append(f"- **First drift detected:** {analysis.first_drift_time}")
+            lines.append(f"- **Earliest supplied checkpoint below alignment threshold:** {analysis.first_drift_time}")
         if analysis.violation_count > 0:
             lines.append(f"- **Violation checkpoints:** {analysis.violation_count}")
 
@@ -90,7 +90,7 @@ def render_markdown_report(report: DriftReport) -> str:
             lines.append("")
             lines.append("  | Date | Alignment | Evidence |")
             lines.append("  |------|-----------|----------|")
-            for cp in analysis.checkpoints[-5:]:  # Last 5 checkpoints
+            for cp in analysis.checkpoints[-5:]:
                 lines.append(f"  | {cp.checkpoint_time} | {cp.alignment_score:.1%} | {cp.evidence_count} items |")
         lines.append("")
 
@@ -99,32 +99,35 @@ def render_markdown_report(report: DriftReport) -> str:
         lines.append("")
         lines.append("## Undeclared Behaviors")
         lines.append("")
-        lines.append("System behaviors detected with no corresponding policy claim:")
+        lines.append("Supplied behavior references marked `UNDECLARED-` with no corresponding policy claim:")
         lines.append("")
         lines.append("| Pattern | Occurrences | First Seen | Last Seen |")
         lines.append("|---------|-------------|------------|-----------|")
         for ub in report.undeclared_behaviors:
             lines.append(f"| {ub.behavior_pattern} | {ub.occurrence_count} | {ub.first_seen[:10]} | {ub.last_seen[:10]} |")
         lines.append("")
-        lines.append("*These behaviors may represent ungoverned operations or policy gaps.*")
-        lines.append("")
 
     lines.append("---")
     lines.append("")
     lines.append("## Verification")
     lines.append("")
-    lines.append("This report is tamper-evident. To verify:")
+    lines.append("Supported JSON artifacts can be checked with the included verifier:")
     lines.append("")
-    lines.append("1. Re-run the detector with the same policies and evidence")
-    lines.append("2. Compare `report_hash` — must match exactly")
-    lines.append("3. Verify evidence hashes with `verify.py`")
+    lines.append("```bash")
+    lines.append("python software/verify.py output/drift_report.json")
+    lines.append("python software/verify.py output/drift_evidence.json")
+    lines.append("```")
     lines.append("")
-    lines.append("Policy hash and behavior hash anchor both sides.")
-    lines.append("Any modification to policies, evidence, or thresholds produces a different report hash.")
+    lines.append("- `drift_report.json`: checks structure, state-count/alignment consistency, and the run-specific report seal.")
+    lines.append("- `drift_evidence.json`: checks every exported item hash plus aggregate policy/behavior hashes.")
+    lines.append("- `policy_hash` and `behavior_hash` are deterministic for the same ordered structured inputs.")
+    lines.append("- `report_hash` is run-specific because `generated_at` is part of its sealed payload; a later re-run is expected to have a different report hash.")
+    lines.append("")
+    lines.append("Verification establishes artifact consistency and tamper evidence. It does not validate the truth, completeness, or provenance of the supplied source data.")
     lines.append("")
     lines.append("---")
     lines.append("")
-    lines.append("*Compliance Drift Detector — RazorGlint Labs*")
+    lines.append("*Compliance Drift Detector — Razorglint Labs*")
     lines.append("")
 
     return "\n".join(lines)
