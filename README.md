@@ -4,7 +4,7 @@
 
 **One proof path:** Compare policy declarations against system behavior evidence at every checkpoint — hash-anchor both sides, measure the delta.
 
-**One outcome:** A tamper-evident drift report showing exactly which policy claims are aligned, drifting, violated, or undeclared — with cryptographic proof of when drift started.
+**One outcome:** A tamper-evident drift report showing exactly which policy claims are aligned, drifting, violated, or undeclared — with tamper-evident evidence of the earliest observed checkpoint at which drift appears in the supplied data.
 
 ---
 
@@ -18,7 +18,7 @@ Nobody noticed because:
 - The CI/CD system evolved without checking the policy
 - The audit is annual — drift accumulated silently for 11 months
 
-This is **compliance drift**. It's the #1 reason companies fail audits they thought they'd pass.
+This is **compliance drift** — one way organisations can arrive at an audit with stated policy and observed operating behavior no longer aligned.
 
 ## What This Does
 
@@ -98,7 +98,7 @@ Produces:
 ## Verify Any Output
 
 ```bash
-python software/verify.py
+python software/verify.py output/drift_report.json
 ```
 
 Returns PASS or FAIL. No ambiguity.
@@ -128,9 +128,9 @@ policy declarations + system behavior + config snapshots + timestamps
 
 Most compliance tools ask: "Are you compliant today?"
 
-This tool asks: **"Are you drifting away from compliance — and can you prove when it started?"**
+This tool asks: **"Are you drifting away from policy — and what is the earliest supplied checkpoint where that divergence becomes visible?"**
 
-That's the difference between a point-in-time checkbox and continuous governance evidence.
+That's the difference between a point-in-time checkbox and longitudinal governance evidence across checkpoints.
 
 ## License / Use
 
