@@ -1,22 +1,24 @@
 # Self-Service Quickstart
 
-**Run a compliance drift scan locally in 60 seconds. No cloud. No credentials. No data leaves your machine.**
+**Run a compliance drift scan locally in about 60 seconds. No cloud service, account, or production credentials required.**
 
 ---
 
 ## What You Need
 
 - Python 3.11+ installed
-- Your policy claims in CSV format
-- Your system behavior evidence in CSV format
+- Structured policy claims in CSV format
+- Structured behavior evidence in CSV format
 
-That's it. No pip install. No API keys. No account.
+The current release expects each behavior-evidence row to include a supplied `compliant` true/false value. It does **not** infer compliance from raw logs or parse natural-language policy documents automatically.
+
+No pip install, API key, or account is required for the core scanner.
 
 ---
 
 ## Step 1: Download or Clone
 
-```
+```bash
 git clone https://github.com/RazorglintLabs/ComplianceDriftDetector.git
 cd ComplianceDriftDetector
 ```
@@ -52,14 +54,16 @@ See `input_templates/` for blank templates. See `examples/template_packs/` for r
 ## Step 3: Run
 
 **Windows (double-click):**
-```
+```text
 START_HERE.bat
 ```
 
 **Any platform (command line):**
-```
+```bash
 python software/run_scan.py
 ```
+
+The scanner makes no network calls and writes output locally under `output/`.
 
 ---
 
@@ -69,43 +73,48 @@ Reports appear in `output/`:
 
 | File | For |
 |------|-----|
-| `drift_report.html` | Open in browser — executive summary with drift table |
-| `drift_report.md` | Markdown — paste into docs or share with team |
-| `drift_report.json` | Machine-readable — feed into other tools |
-| `drift_evidence.json` | Full evidence with per-item hashes |
+| `drift_report.html` | Browser-readable summary with drift table |
+| `drift_report.md` | Markdown report |
+| `drift_report.json` | Machine-readable drift report |
+| `drift_evidence.json` | Complete exported policy/evidence set with hashes |
 
 ---
 
-## Step 5: Verify (Optional)
+## Step 5: Verify Supported JSON Artifacts
 
-```
+```bash
 python software/verify.py output/drift_report.json
+python software/verify.py output/drift_evidence.json
 ```
 
-This recalculates the relevant report structure and hashes and returns PASS or FAIL. To verify the evidence bundle directly, use `python software/verify.py output/drift_evidence.json`.
+The report verifier checks structure, state-count/alignment consistency, and the run-specific report seal. The evidence verifier checks every exported claim/evidence item hash plus the aggregate policy and behavior hashes.
+
+PASS means the supported artifact is internally consistent with those checks. It does **not** establish that the source data is true, complete, independently collected, or compliant with a regulation or standard.
 
 ---
 
 ## No Input Files? No Problem.
 
-If you run without an `input/` directory, the tool runs a built-in 30-day demo scenario with 5 policies and 314 evidence points. Use it to see what output looks like before adding your own data.
+If you run without an `input/` directory, the tool runs a built-in demo scenario with 5 policies and 314 synthetic evidence points. Use it to inspect the workflow before adding your own data.
 
 ---
 
 ## What This Does
 
-- Measures alignment between your stated policies and your observed system behavior
-- Classifies each claim: ALIGNED, DRIFTING, VIOLATED, or UNDECLARED
-- Tracks trend direction over your time window
-- Seals the report with SHA-256 hashes for tamper evidence
+- Measures alignment between structured policy claims and supplied behavior evidence
+- Groups evidence into dated checkpoints
+- Classifies each claim as ALIGNED, DRIFTING, VIOLATED, or UNDECLARED using visible thresholds
+- Tracks trend direction across supplied checkpoints
+- Exports report metadata and evidence hashes for tamper-evident verification
 
 ## What This Does NOT Do
 
-- Does not certify compliance with any standard
-- Does not send data anywhere — everything stays on your machine
-- Does not require an internet connection
-- Does not use AI, ML, or any non-deterministic logic
-- Does not replace formal audits — it produces evidence for audit preparation
+- Does not certify compliance with any standard or regulation
+- Does not infer compliance from raw logs
+- Does not automatically parse policy documents into claims
+- Does not upload input data or require an internet connection for scanning
+- Does not use AI, ML, or non-deterministic scoring
+- Does not replace formal audits or accredited assessments
 
 ---
 
@@ -117,6 +126,6 @@ Ready-to-use example scenarios:
 |------|----------|
 | `examples/template_packs/deployment_approval/` | Deployment governance drift |
 | `examples/template_packs/privileged_access/` | Admin access policy drift |
-| `examples/template_packs/ai_output_logging/` | AI system monitoring drift |
+| `examples/template_packs/ai_output_logging/` | AI system logging-control drift |
 
 Copy any pack's CSVs into `input/` and run.
