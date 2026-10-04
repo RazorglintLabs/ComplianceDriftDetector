@@ -17,7 +17,7 @@ jobs:
       - name: Checkout exact final sale candidate
         uses: actions/checkout@v4
         with:
-          ref: 94a97d3102b3e69f519f3fa8cb740bc61dce461d
+          ref: ced61f637d2bd15de5e0fba98140819beb254f41
           fetch-depth: 1
 
       - name: Set up Python 3.12
@@ -110,7 +110,7 @@ jobs:
               d.pop('report_hash', None)
           if a != b:
               raise SystemExit('FAIL: semantic outputs differ')
-          Path('qualification/determinism_result.txt').write_text('PASS: semantic outputs identical for identical inputs; timestamp-derived fields excluded.\n')
+          Path('qualification/determinism_result.txt').write_text('PASS: semantic outputs identical for identical inputs; run-specific timestamp/report seal excluded.\n')
           PY
 
       - name: Sale claim hygiene scan
@@ -184,14 +184,14 @@ jobs:
           SHA-256: \`$ARCHIVE_HASH\`
 
           ## Boundary
-          This qualifies the exact candidate above. It does not claim production-scale validation, regulatory certification, audit acceptance, real-time monitoring, or enterprise SaaS readiness.
+          This qualifies the exact candidate above. It does not claim production-scale validation, regulatory certification, audit acceptance, real-time monitoring, automatic raw-log compliance inference, or enterprise SaaS readiness.
           EOF
           cat qualification/SALE_QUALIFICATION_RECEIPT.md
 
       - name: Upload final qualification evidence
         uses: actions/upload-artifact@v4
         with:
-          name: COMPLIANCE_DRIFT_DETECTOR_SALE_01_UI_FINAL_QUALIFICATION
+          name: COMPLIANCE_DRIFT_DETECTOR_SALE_01_FINAL_CLEANUP_QUALIFICATION
           path: qualification/
           if-no-files-found: error
           retention-days: 30
