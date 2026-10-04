@@ -1,7 +1,7 @@
 [project]
 name = "compliance-drift-detector"
 version = "0.1.0"
-description = "Checkpoint-based policy-behavior drift detection with tamper-evident proof"
+description = "Checkpoint-based policy-behavior drift detection with tamper-evident reporting"
 requires-python = ">=3.11"
 license = {text = "Proprietary — RazorglintLabs"}
 authors = [{name = "RazorglintLabs"}]
