@@ -43,7 +43,6 @@ def render_html_report(report: DriftReport) -> str:
         "NO_POLICIES": "#6e7781",
     }.get(verdict, "#6e7781")
 
-    # Build analysis rows
     analysis_rows = ""
     for a in report.analyses:
         color = STATE_COLORS.get(a.state.value, "#6e7781")
@@ -56,7 +55,6 @@ def render_html_report(report: DriftReport) -> str:
             <td>{_escape(a.reason)}</td>
         </tr>\n"""
 
-    # Build undeclared rows
     undeclared_rows = ""
     for u in report.undeclared_behaviors:
         undeclared_rows += f"""        <tr>
@@ -138,7 +136,7 @@ code {{ background: #eff1f3; padding: 0.15rem 0.4rem; border-radius: 3px; font-s
     <tr><td>Policy hash</td><td class="hash">{_escape(report.policy_hash)}</td></tr>
     <tr><td>Behavior hash</td><td class="hash">{_escape(report.behavior_hash)}</td></tr>
 </table>
-<p>Verify with: <code>python software/verify.py</code></p>
+<p>Verify with: <code>python software/verify.py output/drift_report.json</code></p>
 
 <div class="boundary">
 <h3>What This Report Proves</h3>
