@@ -8,4 +8,4 @@ You may download and run the public demo/self-service release for evaluation and
 
 Reports generated from your own input data belong to you. The software, templates, detection logic, documentation, and verification structure remain the property of Razorglint Labs / TCOG Collective LLC.
 
-This tool provides deterministic policy-to-behavior drift detection and tamper-evident readiness evidence. It does not provide legal advice, compliance certification, audit certification, or regulatory approval.
+This tool provides deterministic checkpoint-based comparison of structured policy claims and supplied behavior evidence, together with tamper-evident report/evidence artifacts. It does not provide legal advice, compliance certification, audit certification, regulatory approval, or validation of the truth or completeness of supplied source data.
