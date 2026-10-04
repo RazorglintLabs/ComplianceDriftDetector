@@ -17,7 +17,7 @@ jobs:
       - name: Checkout exact final sale candidate
         uses: actions/checkout@v4
         with:
-          ref: 4dd23849807b3db8ad3df6dc2364f464151b83d6
+          ref: 94a97d3102b3e69f519f3fa8cb740bc61dce461d
           fetch-depth: 1
 
       - name: Set up Python 3.12
@@ -39,6 +39,37 @@ jobs:
         run: |
           set -o pipefail
           python -m pytest -q 2>&1 | tee qualification/pytest_output.txt
+
+      - name: Local UI source gate
+        run: |
+          python -m py_compile software/ui_app.py
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          path = Path('software/ui_app.py')
+          tree = ast.parse(path.read_text(encoding='utf-8'))
+          imports = set()
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import):
+                  imports.update(alias.name.split('.')[0] for alias in node.names)
+              elif isinstance(node, ast.ImportFrom) and node.module:
+                  imports.add(node.module.split('.')[0])
+          forbidden = {'requests', 'httpx', 'urllib3', 'socket'}
+          found = sorted(imports & forbidden)
+          if found:
+              raise SystemExit(f'FAIL: unexpected network-oriented UI import(s): {found}')
+          source = path.read_text(encoding='utf-8')
+          required = [
+              'from compliance_drift_detector import ComplianceDriftDetector',
+              'from run_scan import load_evidence, load_policies',
+              'from verify import verify_drift_evidence, verify_drift_report',
+          ]
+          missing = [item for item in required if item not in source]
+          if missing:
+              raise SystemExit(f'FAIL: UI engine/verifier bindings missing: {missing}')
+          Path('qualification/ui_gate.txt').write_text('PASS: UI compiles, has no network-oriented imports, and binds to existing engine/loaders/verifier.\n')
+          print('PASS: local UI source gate')
+          PY
 
       - name: Built-in demo and verification
         run: |
@@ -97,7 +128,7 @@ jobs:
           text=Path('pyproject.toml').read_text()
           if 'dependencies' in text:
               raise SystemExit('Review required: dependencies declaration found')
-          Path('qualification/runtime_dependency_check.txt').write_text('PASS: no project runtime dependencies declared.\n')
+          Path('qualification/runtime_dependency_check.txt').write_text('PASS: no project runtime dependencies declared. Desktop UI uses Tkinter when available; core scanner/verifier remain stdlib-only.\n')
           PY
 
       - name: Basic sensitive-material scan
@@ -112,7 +143,7 @@ jobs:
       - name: Build frozen final source archive
         run: |
           rm -rf input output
-          find . -type f -not -path './.git/*' -not -path './qualification/*' -print | sort > qualification/repository_file_inventory.txt
+          find . -type f -not -path './.git/*' -not -path './qualification/*' -not -path './__pycache__/*' -not -path './software/__pycache__/*' -print | sort > qualification/repository_file_inventory.txt
           mkdir -p qualification/archive_root/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE
           while IFS= read -r f; do
             rel="${f#./}"
@@ -140,6 +171,7 @@ jobs:
 
           ## Gates
           - Full pytest suite: PASS
+          - Local UI compile/binding/no-network-import source gate: PASS
           - Built-in demo + report/evidence verification: PASS
           - Self-service CSV path + report/evidence verification: PASS
           - Semantic deterministic re-run: PASS
@@ -159,7 +191,7 @@ jobs:
       - name: Upload final qualification evidence
         uses: actions/upload-artifact@v4
         with:
-          name: COMPLIANCE_DRIFT_DETECTOR_SALE_01_FINAL_QUALIFICATION
+          name: COMPLIANCE_DRIFT_DETECTOR_SALE_01_UI_FINAL_QUALIFICATION
           path: qualification/
           if-no-files-found: error
           retention-days: 30
