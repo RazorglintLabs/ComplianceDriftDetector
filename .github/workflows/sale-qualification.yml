@@ -50,7 +50,8 @@ jobs:
           test -f output/drift_report.md
           test -f output/drift_report.json
           test -f output/drift_evidence.json
-          python software/verify.py 2>&1 | tee qualification/demo_verify_output.txt
+          python software/verify.py output/drift_report.json 2>&1 | tee qualification/demo_verify_report_output.txt
+          python software/verify.py output/drift_evidence.json 2>&1 | tee qualification/demo_verify_evidence_output.txt
           cp -R output qualification/demo_output
 
       - name: Run self-service CSV path
@@ -65,7 +66,8 @@ jobs:
           test -f output/drift_report.md
           test -f output/drift_report.json
           test -f output/drift_evidence.json
-          python software/verify.py 2>&1 | tee qualification/self_service_verify_output.txt
+          python software/verify.py output/drift_report.json 2>&1 | tee qualification/self_service_verify_report_output.txt
+          python software/verify.py output/drift_evidence.json 2>&1 | tee qualification/self_service_verify_evidence_output.txt
           cp -R output qualification/self_service_output
 
       - name: Check semantic determinism
@@ -154,9 +156,9 @@ jobs:
           - Full pytest suite: PASS
           - Built-in demo path: PASS
           - JSON / Markdown / HTML / evidence outputs generated: PASS
-          - Independent verifier on demo output: PASS
+          - Independent verifier on demo report + evidence: PASS
           - Self-service CSV path using deployment_approval template pack: PASS
-          - Independent verifier on self-service output: PASS
+          - Independent verifier on self-service report + evidence: PASS
           - Semantic deterministic re-run: PASS (timestamp-derived fields excluded)
           - No project runtime dependencies declared in pyproject.toml: PASS
           - Basic credential/private-key pattern scan: PASS
