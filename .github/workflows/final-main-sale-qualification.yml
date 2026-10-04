@@ -1,0 +1,120 @@
+name: Final Main Sale Qualification
+
+on:
+  push:
+    branches:
+      - sale/qualification-2026-10-04
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact final main
+        uses: actions/checkout@v4
+        with:
+          ref: 1e115101b8044c128c5b0dcffe03e23f6464225c
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test runner
+        run: python -m pip install --disable-pip-version-check pytest
+      - name: Record identity
+        run: |
+          mkdir -p qualification
+          echo "candidate_commit=$(git rev-parse HEAD)" | tee qualification/identity.txt
+          echo "candidate_tree=$(git rev-parse HEAD^{tree})" | tee -a qualification/identity.txt
+          python --version 2>&1 | tee qualification/python_version.txt
+      - name: Full tests with deprecations fatal
+        run: |
+          set -o pipefail
+          python -m pytest -q -W error::DeprecationWarning 2>&1 | tee qualification/pytest_output.txt
+      - name: UI source gate
+        run: |
+          python -m py_compile software/ui_app.py
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          path=Path('software/ui_app.py')
+          tree=ast.parse(path.read_text(encoding='utf-8'))
+          imports=set()
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Import): imports.update(a.name.split('.')[0] for a in node.names)
+              elif isinstance(node, ast.ImportFrom) and node.module: imports.add(node.module.split('.')[0])
+          bad=sorted(imports & {'requests','httpx','urllib3','socket'})
+          if bad: raise SystemExit(f'FAIL: network-oriented UI imports: {bad}')
+          print('PASS: UI compile + no-network-import gate')
+          PY
+      - name: Demo and verification
+        run: |
+          rm -rf input output
+          python software/run_scan.py | tee qualification/demo_run.txt
+          python software/verify.py output/drift_report.json | tee qualification/demo_verify_report.txt
+          python software/verify.py output/drift_evidence.json | tee qualification/demo_verify_evidence.txt
+          cp -R output qualification/demo_output
+      - name: Self-service and verification
+        run: |
+          rm -rf input output
+          mkdir -p input
+          cp examples/template_packs/deployment_approval/policy_claims.csv input/policy_claims.csv
+          cp examples/template_packs/deployment_approval/behavior_evidence.csv input/behavior_evidence.csv
+          python software/run_scan.py | tee qualification/self_service_run.txt
+          python software/verify.py output/drift_report.json | tee qualification/self_service_verify_report.txt
+          python software/verify.py output/drift_evidence.json | tee qualification/self_service_verify_evidence.txt
+          cp -R output qualification/self_service_output
+      - name: Stale claim and sensitive material gates
+        run: |
+          if grep -RInE --exclude-dir=.git --exclude-dir=qualification '(#1 reason companies fail audits|cryptographic proof of when drift started|Continuous monitoring between audit points|datetime\.utcnow\()' .; then exit 1; fi
+          set +e
+          grep -RInE --exclude-dir=.git --exclude-dir=qualification --exclude='*.pyc' '(BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|password[[:space:]]*=[[:space:]]*[^[:space:]]+|secret[[:space:]]*=[[:space:]]*[^[:space:]]+|token[[:space:]]*=[[:space:]]*[^[:space:]]+)' . > qualification/sensitive_scan.txt
+          rc=$?
+          if [ "$rc" -eq 0 ]; then cat qualification/sensitive_scan.txt; exit 1; fi
+          if [ "$rc" -eq 1 ]; then echo 'PASS: no obvious credential/private-key patterns found.' > qualification/sensitive_scan.txt; exit 0; fi
+          exit "$rc"
+      - name: Build final source archive
+        run: |
+          rm -rf input output
+          find . -type f -not -path './.git/*' -not -path './qualification/*' -not -path './__pycache__/*' -not -path './software/__pycache__/*' -print | sort > qualification/repository_file_inventory.txt
+          mkdir -p qualification/archive_root/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE
+          while IFS= read -r f; do rel="${f#./}"; mkdir -p "qualification/archive_root/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE/$(dirname "$rel")"; cp "$rel" "qualification/archive_root/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE/$rel"; done < qualification/repository_file_inventory.txt
+          (cd qualification/archive_root && zip -qr ../COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE.zip COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE)
+          sha256sum qualification/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE.zip | tee qualification/source_archive.sha256
+      - name: Write receipt
+        run: |
+          TEST_LINE=$(tail -n 1 qualification/pytest_output.txt)
+          COMMIT=$(git rev-parse HEAD)
+          TREE=$(git rev-parse HEAD^{tree})
+          HASH=$(cut -d' ' -f1 qualification/source_archive.sha256)
+          cat > qualification/SALE_QUALIFICATION_RECEIPT.md <<EOF
+          # ComplianceDriftDetector — Final Sale 01 Qualification Receipt
+
+          **Date:** 2026-10-04  
+          **Final main commit:** \`$COMMIT\`  
+          **Tree:** \`$TREE\`  
+          **Python:** $(python --version 2>&1)  
+          **Tests:** $TEST_LINE  
+
+          ## Gates
+          - Full tests with Python deprecations treated as errors: PASS
+          - Local UI compile/no-network-import gate: PASS
+          - Demo report + evidence verification: PASS
+          - Self-service report + evidence verification: PASS
+          - Claim-hygiene scan: PASS
+          - Basic sensitive-material scan: PASS
+
+          ## Frozen source
+          \`COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE.zip\`  
+          SHA-256: \`$HASH\`
+
+          ## Boundary
+          This qualifies the exact final main commit above. It does not claim production-scale validation, regulatory certification, audit acceptance, real-time monitoring, automatic raw-log compliance inference, or enterprise SaaS readiness.
+          EOF
+      - uses: actions/upload-artifact@v4
+        with:
+          name: COMPLIANCE_DRIFT_DETECTOR_SALE_01_FINAL_MAIN_QUALIFICATION
+          path: qualification/
+          retention-days: 30
