@@ -1,0 +1,180 @@
+name: Sale 01 Qualification
+
+on:
+  push:
+    branches:
+      - sale/qualification-2026-10-04
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact sale candidate
+        uses: actions/checkout@v4
+        with:
+          ref: 2e2a690a5b3cbcff4f5ae699c8602eedc112879f
+          fetch-depth: 1
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install test runner only
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Record immutable candidate identity
+        run: |
+          mkdir -p qualification
+          echo "candidate_commit=$(git rev-parse HEAD)" | tee qualification/identity.txt
+          echo "candidate_tree=$(git rev-parse HEAD^{tree})" | tee -a qualification/identity.txt
+          python --version 2>&1 | tee qualification/python_version.txt
+          git status --porcelain | tee qualification/git_status_before.txt
+
+      - name: Run full test suite
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee qualification/pytest_output.txt
+
+      - name: Run built-in demo path
+        run: |
+          rm -rf input output
+          set -o pipefail
+          python software/run_scan.py 2>&1 | tee qualification/demo_run_output.txt
+          test -f output/drift_report.html
+          test -f output/drift_report.md
+          test -f output/drift_report.json
+          test -f output/drift_evidence.json
+          python software/verify.py 2>&1 | tee qualification/demo_verify_output.txt
+          cp -R output qualification/demo_output
+
+      - name: Run self-service CSV path
+        run: |
+          rm -rf input output
+          mkdir -p input
+          cp examples/template_packs/deployment_approval/policy_claims.csv input/policy_claims.csv
+          cp examples/template_packs/deployment_approval/behavior_evidence.csv input/behavior_evidence.csv
+          set -o pipefail
+          python software/run_scan.py 2>&1 | tee qualification/self_service_run_output.txt
+          test -f output/drift_report.html
+          test -f output/drift_report.md
+          test -f output/drift_report.json
+          test -f output/drift_evidence.json
+          python software/verify.py 2>&1 | tee qualification/self_service_verify_output.txt
+          cp -R output qualification/self_service_output
+
+      - name: Check semantic determinism
+        run: |
+          cp output/drift_report.json qualification/run1.json
+          rm -rf output
+          python software/run_scan.py > qualification/determinism_second_run.txt 2>&1
+          cp output/drift_report.json qualification/run2.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('qualification/run1.json').read_text())
+          b=json.loads(Path('qualification/run2.json').read_text())
+          for d in (a,b):
+              d.pop('generated_at', None)
+              d.pop('report_hash', None)
+          if a != b:
+              raise SystemExit('FAIL: semantic outputs differ for identical inputs')
+          Path('qualification/determinism_result.txt').write_text('PASS: semantic outputs identical for identical inputs; generated_at/report_hash intentionally excluded.\n')
+          print('PASS: semantic deterministic re-run')
+          PY
+
+      - name: Confirm runtime dependency posture
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text=Path('pyproject.toml').read_text()
+          if 'dependencies' in text:
+              raise SystemExit('Review required: dependencies declaration found in pyproject.toml')
+          Path('qualification/runtime_dependency_check.txt').write_text('PASS: no project runtime dependencies declared in pyproject.toml. Test runner pytest was installed only for qualification.\n')
+          print('PASS: no declared runtime dependencies')
+          PY
+
+      - name: Basic sensitive-material scan
+        run: |
+          set +e
+          grep -RInE --exclude-dir=.git --exclude-dir=qualification --exclude='*.pyc' '(BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|password[[:space:]]*=[[:space:]]*[^[:space:]]+|secret[[:space:]]*=[[:space:]]*[^[:space:]]+|token[[:space:]]*=[[:space:]]*[^[:space:]]+)' . > qualification/sensitive_scan.txt
+          rc=$?
+          if [ "$rc" -eq 0 ]; then
+            echo 'REVIEW_REQUIRED: pattern matches found; inspect sensitive_scan.txt'
+            cat qualification/sensitive_scan.txt
+            exit 1
+          elif [ "$rc" -eq 1 ]; then
+            echo 'PASS: no obvious private-key/credential patterns found.' | tee qualification/sensitive_scan.txt
+            exit 0
+          else
+            echo 'FAIL: scan command error'
+            exit "$rc"
+          fi
+
+      - name: Inventory exact repository files
+        run: |
+          find . -type f -not -path './.git/*' -not -path './qualification/*' -not -path './output/*' -not -path './input/*' -print | sort > qualification/repository_file_inventory.txt
+          wc -l qualification/repository_file_inventory.txt | tee qualification/repository_file_count.txt
+
+      - name: Build frozen source archive and manifest
+        run: |
+          rm -rf input output
+          mkdir -p qualification/archive_root/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE
+          while IFS= read -r f; do
+            rel="${f#./}"
+            mkdir -p "qualification/archive_root/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE/$(dirname "$rel")"
+            cp "$rel" "qualification/archive_root/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE/$rel"
+          done < qualification/repository_file_inventory.txt
+          (cd qualification/archive_root && zip -qr ../COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE.zip COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE)
+          sha256sum qualification/COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE.zip | tee qualification/source_archive.sha256
+          (cd qualification && find demo_output self_service_output -type f -print0 | sort -z | xargs -0 sha256sum) > qualification/generated_output_manifest.sha256
+
+      - name: Write qualification receipt
+        run: |
+          TEST_LINE=$(tail -n 1 qualification/pytest_output.txt)
+          COMMIT=$(git rev-parse HEAD)
+          TREE=$(git rev-parse HEAD^{tree})
+          PYVER=$(cat qualification/python_version.txt)
+          ARCHIVE_HASH=$(cut -d' ' -f1 qualification/source_archive.sha256)
+          cat > qualification/SALE_QUALIFICATION_RECEIPT.md <<EOF
+          # ComplianceDriftDetector — Sale 01 Qualification Receipt
+
+          **Qualification date:** 2026-10-04  
+          **Candidate commit:** \`$COMMIT\`  
+          **Candidate tree:** \`$TREE\`  
+          **Environment:** $PYVER  
+          **Test result:** $TEST_LINE  
+
+          ## Executed gates
+          - Full pytest suite: PASS
+          - Built-in demo path: PASS
+          - JSON / Markdown / HTML / evidence outputs generated: PASS
+          - Independent verifier on demo output: PASS
+          - Self-service CSV path using deployment_approval template pack: PASS
+          - Independent verifier on self-service output: PASS
+          - Semantic deterministic re-run: PASS (timestamp-derived fields excluded)
+          - No project runtime dependencies declared in pyproject.toml: PASS
+          - Basic credential/private-key pattern scan: PASS
+          - Exact repository file inventory recorded: PASS
+
+          ## Frozen source archive
+          \`COMPLIANCE_DRIFT_DETECTOR_SALE_01_SOURCE.zip\`  
+          SHA-256: \`$ARCHIVE_HASH\`
+
+          ## Important boundary
+          This receipt qualifies the exact source candidate identified above. It does not claim production-scale validation, regulatory certification, audit acceptance, live monitoring, or enterprise SaaS readiness.
+          EOF
+          cat qualification/SALE_QUALIFICATION_RECEIPT.md
+
+      - name: Upload qualification evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: COMPLIANCE_DRIFT_DETECTOR_SALE_01_QUALIFICATION
+          path: qualification/
+          if-no-files-found: error
+          retention-days: 30
