@@ -63,6 +63,6 @@ https://github.com/RazorglintLabs/ComplianceDriftDetector/releases/tag/v0.1.1-se
 Subscribe:
 - Starter ($49/mo, 7-day trial): https://buy.stripe.com/cNi5kxghbd3CbdKfKn1ZS08
 - Team ($149/mo): https://buy.stripe.com/fZubIVe934x61DadCf1ZS07
-- Consultant ($299/mo): https://buy.stripe.com/14AdR39SNgfOepW8hV1ZS06)
+- Consultant ($299/mo): https://buy.stripe.com/14AdR39SNgfOepW8hV1ZS06
 
 License tiers and policies are in the repo README.
