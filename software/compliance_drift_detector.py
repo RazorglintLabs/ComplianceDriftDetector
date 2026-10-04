@@ -12,7 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field, asdict
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional
 
@@ -358,7 +358,7 @@ class ComplianceDriftDetector:
         """
         if not self.claims:
             return DriftReport(
-                generated_at=datetime.utcnow().isoformat() + "Z",
+                generated_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
                 policy_hash=sha256("EMPTY"),
                 behavior_hash=sha256("EMPTY"),
                 total_claims=0,
@@ -424,7 +424,7 @@ class ComplianceDriftDetector:
         }
 
         report = DriftReport(
-            generated_at=datetime.utcnow().isoformat() + "Z",
+            generated_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             policy_hash=policy_hash,
             behavior_hash=behavior_hash,
             total_claims=total,
