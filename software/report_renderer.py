@@ -9,6 +9,11 @@ from __future__ import annotations
 import json
 from compliance_drift_detector import DriftReport, DriftState
 
+try:
+    from ui_semantics import history_status
+except ImportError:  # package-style test/import path
+    from software.ui_semantics import history_status
+
 
 def render_markdown_report(report: DriftReport) -> str:
     """Render human-readable markdown drift report."""
@@ -28,32 +33,33 @@ def render_markdown_report(report: DriftReport) -> str:
         "",
         f"**{report.summary.get('verdict', 'UNKNOWN')}**",
         "",
-        f"- Policy alignment: **{report.summary.get('aligned_percentage', 0)}%** of claims fully aligned",
+        f"- Policy alignment: **{report.summary.get('aligned_percentage', 0)}%** of claims currently aligned",
         f"- Total claims: **{report.total_claims}**",
-        f"- Undeclared behaviors: **{report.summary.get('undeclared_behavior_count', 0)}**",
+        f"- Undeclared behavior findings: **{report.summary.get('undeclared_behavior_count', 0)}**",
         "",
     ]
 
     thresholds = report.summary.get("thresholds", {})
+    alignment_threshold = thresholds.get("alignment", 0.95)
     if thresholds:
         lines.append("### Thresholds (visible — no hidden scoring)")
         lines.append("")
-        lines.append(f"- Alignment threshold: **{thresholds.get('alignment', 0.95):.0%}** (at or above = ALIGNED)")
-        lines.append(f"- Violation threshold: **{thresholds.get('violation', 0.70):.0%}** (below = VIOLATED)")
-        lines.append(f"- Drift sensitivity: **{thresholds.get('drift_sensitivity', 0.05):.0%}** (minimum first-to-last trend delta)")
+        lines.append(f"- Alignment threshold: **{alignment_threshold:.0%}** (current score at or above = ALIGNED)")
+        lines.append(f"- Violation threshold: **{thresholds.get('violation', 0.70):.0%}** (current score below = VIOLATED)")
+        lines.append(f"- Drift sensitivity: **{thresholds.get('drift_sensitivity', 0.05):.0%}** (minimum first-to-last delta used by the raw engine trend)")
         lines.append("")
 
     state_counts = report.summary.get("state_counts", {})
     if state_counts:
-        lines.append("### State Distribution")
+        lines.append("### Current Policy-Claim State Distribution")
         lines.append("")
-        lines.append("| State | Count | Meaning |")
-        lines.append("|-------|-------|---------|")
+        lines.append("| Current State | Count | Meaning |")
+        lines.append("|---------------|-------|---------|")
         meanings = {
             "ALIGNED": "Latest supplied evidence meets the alignment threshold",
             "DRIFTING": "Latest alignment is below the alignment threshold but above the violation threshold",
             "VIOLATED": "Latest alignment is below the violation threshold",
-            "UNDECLARED": "No mapped evidence was supplied for this claim",
+            "UNDECLARED": "No mapped evidence was supplied for this policy claim",
         }
         for state, count in sorted(state_counts.items()):
             lines.append(f"| {state} | {count} | {meanings.get(state, '')} |")
@@ -63,6 +69,8 @@ def render_markdown_report(report: DriftReport) -> str:
     lines.append("")
     lines.append("## Policy Claim Analysis")
     lines.append("")
+    lines.append("**History Status** summarizes the full supplied checkpoint sequence. `RECOVERED` means the latest checkpoint is aligned after an earlier threshold breach. The raw first-to-last detector trend is shown separately.")
+    lines.append("")
 
     for i, analysis in enumerate(report.analyses, 1):
         state_icon = {
@@ -71,19 +79,21 @@ def render_markdown_report(report: DriftReport) -> str:
             DriftState.VIOLATED: "[VIOLATED]",
             DriftState.UNDECLARED: "[UNDECLARED]",
         }.get(analysis.state, "[?]")
+        history = history_status(analysis, alignment_threshold=alignment_threshold)
 
         lines.append(f"### Claim {i}: `{analysis.claim_id}` — {state_icon}")
         lines.append("")
         lines.append(f"- **Description:** {analysis.claim_description}")
-        lines.append(f"- **State:** {analysis.state.value}")
+        lines.append(f"- **Current State:** {analysis.state.value}")
         lines.append(f"- **Current Alignment:** {analysis.current_alignment:.1%}")
-        lines.append(f"- **Trend:** {analysis.trend}")
+        lines.append(f"- **History Status:** {history}")
+        lines.append(f"- **First-to-last Trend (raw engine direction):** {analysis.trend}")
         lines.append(f"- **Reason:** {analysis.reason}")
 
         if analysis.first_drift_time:
-            lines.append(f"- **Earliest supplied checkpoint below alignment threshold:** {analysis.first_drift_time}")
+            lines.append(f"- **First Threshold Breach:** {analysis.first_drift_time}")
         if analysis.violation_count > 0:
-            lines.append(f"- **Violation checkpoints:** {analysis.violation_count}")
+            lines.append(f"- **Violation Checkpoints:** {analysis.violation_count}")
 
         if analysis.checkpoints:
             lines.append(f"- **Checkpoints:** {len(analysis.checkpoints)} measurements")
@@ -97,9 +107,9 @@ def render_markdown_report(report: DriftReport) -> str:
     if report.undeclared_behaviors:
         lines.append("---")
         lines.append("")
-        lines.append("## Undeclared Behaviors")
+        lines.append("## Undeclared Behavior Findings")
         lines.append("")
-        lines.append("Supplied behavior references marked `UNDECLARED-` with no corresponding policy claim:")
+        lines.append("Supplied behavior references marked `UNDECLARED-` with no corresponding policy claim. These are separate findings, not policy-claim states:")
         lines.append("")
         lines.append("| Pattern | Occurrences | First Seen | Last Seen |")
         lines.append("|---------|-------------|------------|-----------|")
