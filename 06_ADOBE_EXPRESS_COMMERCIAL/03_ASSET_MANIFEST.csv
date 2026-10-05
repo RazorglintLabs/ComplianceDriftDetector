@@ -1,0 +1,9 @@
+scene,final_filename,purpose,required,notes
+01,SCENE_01_NEW_SCAN.png,Opening product UI,yes,"Clean 1920x1080 capture; show local-first/no-cloud/deterministic/verifier banner"
+02,SCENE_02_SCAN_RESULTS.png,Core scan result,yes,"Use corrected semantics screen with ALIGNED/DRIFTING/VIOLATED and separate undeclared behavior finding"
+03,SCENE_03_HTML_REPORT_OVERVIEW.png,Human-readable report proof,yes,"Show CURRENTLY ALIGNED / VIOLATED CLAIMS and RECOVERED history status"
+04,SCENE_04_HTML_REPORT_DETAIL.png,Undeclared behavior / thresholds / verification context,yes,"Keep report boundaries visible; avoid unnecessary browser chrome"
+05,SCENE_05_VERIFY_REPORT_PASS.png,Report integrity PASS,yes,"Crop so PASS message remains readable"
+06,SCENE_06_VERIFY_EVIDENCE_PASS.png,Evidence integrity PASS,yes,"Crop so PASS message remains readable"
+07,SCENE_07_FULL_SUITE_VALIDATION.png,Automated validation proof,yes,"Use buyer-safe Sale 01 validation console, not raw pytest output"
+08,SCENE_08_LOGO_ENDCARD.png,Optional prebuilt end card,no,"If absent, build end card directly in Adobe Express"

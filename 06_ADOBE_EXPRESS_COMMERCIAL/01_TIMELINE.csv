@@ -1,0 +1,10 @@
+scene,start,end,duration,asset_or_card,visual_action,on_screen_text
+00,00:00,00:05,5s,ADOBE_CARD,Dark branded opening; title fades in,"Your policies say what should happen. What does your system actually do?"
+01,00:05,00:11,6s,SCENE_01_NEW_SCAN.png,Slow push-in toward center UI,"LOCAL-FIRST • NO CLOUD • DETERMINISTIC ENGINE • INDEPENDENT VERIFIER"
+02,00:11,00:18,7s,SCENE_02_SCAN_RESULTS.png,Gentle push-in toward result cards and table,"See current state. See history. See what changed."
+03,00:18,00:27,9s,SCENE_03_HTML_REPORT_OVERVIEW.png,Slow pan across report summary into analysis table,"Human-readable evidence. Dated checkpoints. Clear state."
+04,00:27,00:34,7s,SCENE_04_HTML_REPORT_DETAIL.png,Slow pan to undeclared behavior / thresholds / verification section,"Declared policy and unmatched behavior stay separate."
+05,00:34,00:38,4s,SCENE_05_VERIFY_REPORT_PASS.png,Very subtle zoom toward PASS message,"REPORT INTEGRITY: PASS"
+06,00:38,00:42,4s,SCENE_06_VERIFY_EVIDENCE_PASS.png,Very subtle zoom toward PASS message,"EVIDENCE INTEGRITY: PASS"
+07,00:42,00:48,6s,SCENE_07_FULL_SUITE_VALIDATION.png,Begin on validation scope; move downward to final PASS block,"58/58 AUTOMATED CHECKS PASS"
+08,00:48,00:52,4s,ADOBE_CARD,Dark end card; product name and company fade in,"Compliance Drift Detector — Evidence over assumption. • Razorglint Labs"

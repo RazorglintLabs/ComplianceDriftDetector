@@ -1,0 +1,14 @@
+Create a 1920x1080 landscape product commercial named CDD_SALE_01_COMMERCIAL using the imported scene assets in numeric order. Target runtime: 52 seconds. Use restrained B2B motion only: slow push-ins, gentle pans, and short fades. Do not use flashy template transitions, spins, glitch effects, or rapid zooms.
+
+Scene timing:
+00 opening card 0:00-0:05
+01 SCENE_01_NEW_SCAN.png 0:05-0:11
+02 SCENE_02_SCAN_RESULTS.png 0:11-0:18
+03 SCENE_03_HTML_REPORT_OVERVIEW.png 0:18-0:27
+04 SCENE_04_HTML_REPORT_DETAIL.png 0:27-0:34
+05 SCENE_05_VERIFY_REPORT_PASS.png 0:34-0:38
+06 SCENE_06_VERIFY_EVIDENCE_PASS.png 0:38-0:42
+07 SCENE_07_FULL_SUITE_VALIDATION.png 0:42-0:48
+08 end card 0:48-0:52
+
+Use the exact on-screen text from 04_ON_SCREEN_TEXT.md. Keep PASS messages, result labels, report headings, and validation boundaries readable. Build the silent visual skeleton first. Do not add voice or music until the visual sequence is locked. Do not imply regulatory certification or accredited audit status.
