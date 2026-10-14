@@ -21,7 +21,7 @@ Every result stays traceable through dated checkpoints and human-readable report
 Generated reports and evidence packages can then be independently checked for structural and hash integrity.
 
 ## 00:42–00:48
-And the Sale 01 build? Fifty-eight automated checks. Fifty-eight passes.
+And the tested build? Its regression results and verification evidence can be independently inspected.
 
 ## 00:48–00:52
 Compliance Drift Detector. Evidence over assumption. Razorglint Labs.
