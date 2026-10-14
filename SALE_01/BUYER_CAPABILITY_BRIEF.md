@@ -1,36 +1,41 @@
-# Compliance Drift Detector — software/IP acquisition brief
-**Razorglint Labs / TCOG Collective LLC** · October 15, 2026 · non-confidential
+# Compliance Drift Detector — commercial licensing / OEM capability brief
+**Razorglint Labs / TCOG Collective LLC** · October 15, 2026 · NON-CONFIDENTIAL
+**Commercial posture: IP RETAINED. LICENSING / OEM / INTEGRATION PARTNERSHIPS. NOT OFFERED FOR SALE.**
+
+## The problem
+A documented control can appear healthy today even when earlier structured operating evidence shows that the process drifted or crossed a threshold. Existing point-in-time reporting can miss this historical context.
 
 ## The capability
-Written controls can say one thing while the structured evidence collected at different checkpoints says another. Compliance Drift Detector compares **operator-supplied structured policy claims** to **operator-supplied, pre-classified behavior observations**. It measures per-checkpoint alignment, highlights earlier threshold breaches, and distinguishes a recovered control from one that never drifted.
+**Compliance Drift Detector (CDD)** compares operator-supplied, structured policy claims with operator-supplied, **pre-classified** behavior observations across dated checkpoints. It computes deterministic alignment states (**ALIGNED, DRIFTING, VIOLATED, UNDECLARED**), distinguishes unmatched undeclared-behavior findings, highlights first threshold breaches and presents historical **RECOVERED** states.
 
-The outcome is an inspectable local report, not an automated compliance opinion.
+The output is inspectable, local reporting — **not** an automatic compliance opinion.
 
-## What is included in the present product
-- Deterministic Python stdlib-only scanner, documented CSV intake and bundled examples.
-- Current claim states: **ALIGNED / DRIFTING / VIOLATED / UNDECLARED** (no evidence).
-- Separately counted **undeclared behavior findings** for unmatched `UNDECLARED-*` references.
-- Buyer-facing history status, including **RECOVERED** when earlier below-threshold evidence precedes current alignment.
-- JSON / Markdown / HTML reports; SHA-256 report seal and evidence hashes; independent consistency verifier for supported JSON artifacts.
-- Local Tkinter review UI, Windows launchers, CLI and unit/regression suites.
-- Bundled synthetic scenarios for deployment approval, privileged access and AI output logging.
+## Available implementation
+- Python 3.11+ stdlib-only scanner and independent JSON consistency verifier.
+- Defined CSV intake, documentation, synthetic examples and Windows launchers.
+- Local Tkinter desktop interface plus CLI.
+- JSON / Markdown / HTML reports with SHA-256 seals and item/aggregate evidence hashes.
+- Regression testing, including cross-platform qualification against the current candidate branch (not a production-certification claim).
 
-## Why consider source/IP acquisition?
-A platform, audit consultancy or specialist integrator with existing workflows could evaluate this as a compact **offline deterministic analysis component**, alongside its own data collection, governance, storage and user controls. It is not offered as a substitute for a mature GRC platform.
+## How we partner
+Razorglint Labs **retains ownership** and seeks:
+- Product/internal-use licenses and paid evaluations.
+- Bounded team, consulting and multi-deployment licensing.
+- **OEM / embedded technology licensing** into an existing platform, on negotiated terms.
+- Clearly scoped integrations and commercial partnerships.
 
-## Honest current boundary
-- Inputs must already be structured and the `compliant` field supplied. No raw-log classification, natural-language policy parsing or live connectors.
-- Claim-level numeric `threshold` is metadata only; present classification uses global thresholds.
-- Batch / checkpoint analysis, not real-time continuous monitoring or preventive enforcement.
-- No production-scale validation, multi-tenant service, built-in auth or longitudinal database.
-- Report checksums test artifact consistency and detect certain changes; they do not prove who collected the source data, validate source truth, or provide authenticity against an adversary who recomputes hashes.
-- No compliance certification, regulatory determination or guaranteed audit acceptance.
-- The public repository has previously been offered under proprietary evaluation permissions. Any existing distribution/licensing rights must be disclosed and reviewed before exclusivity claims.
+Existing published self-service license tiers include Starter **$49/month**, Team **$149/month** and Consultant **$299/month**. **OEM/enterprise source integration is custom-scoped and custom-quoted**; no blanket exclusivity, source rights, derivative rights or resale rights are implied. Actual customer/revenue status must be independently verified.
 
-## Proposed transaction perimeter
-Potential outright assignment of **CDD-specific transferable source and IP**, documentation, tests, example packs and verification tools, with exact items and retained third-party/prior-license rights specified in the agreement. TCOG Collective LLC, Prestige Forge / Prestige-Reforged, Viventia, SAR, VEAC, other Razorglint IP, unrelated brands/domains and future developments **are excluded**. Any transition services are separately scoped.
+## Exact limits
+- No automatic raw-log interpretation, natural-language policy ingestion, live production collectors, preventive enforcement, multi-tenant hosted service or compliance certification.
+- The operator supplies `compliant` classification; claim-level numeric `threshold` remains descriptive metadata, while **global alignment thresholds** control scoring.
+- Hash checks support artifact consistency/tamper evidence, **not authenticated original-source provenance**, and an adversary able to rewrite/re-hash an export can produce a new self-consistent file.
+- Not yet proven at production scale. New integration, support and deployment responsibilities must be contractually defined.
 
-**Interested in evaluating the fit?** Ask for a non-confidential demo and an exact-build proof sheet. Deeper diligence and source-transfer terms follow qualified interest and, if appropriate, an NDA.
+## IP boundary
+All CDD source/IP ownership remains with **TCOG Collective LLC / Razorglint Labs**, subject to documented rights. Prestige Forge / Prestige-Reforged, Viventia, SAR, VEAC and all other Razorglint IP are **excluded**. No assignment or acquisition of IP is being offered in this outreach.
 
-Contact: razorglint.ops@protonmail.com
-Repository: https://github.com/RazorglintLabs/ComplianceDriftDetector
+**Contact:** razorglint.ops@protonmail.com
+**Repository:** https://github.com/RazorglintLabs/ComplianceDriftDetector
+
+*Next step: request a three-minute synthetic demo and a discussion of your intended deployment / OEM integration use case.*
