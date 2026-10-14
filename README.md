@@ -32,7 +32,9 @@ Evidence rows whose `claim_ref` begins with `UNDECLARED-` and does not match a p
 
 ### Important input boundary
 
-The optional per-claim `threshold` CSV field is retained as descriptive claim metadata; the detector currently scores using its global visible alignment and violation thresholds, not per-claim numeric threshold evaluation.\n\nThe current release does **not** infer compliance from raw logs and does **not** parse natural-language policy documents into claims automatically. Policy assertions and evidence classification are supplied as structured input. The engine then performs deterministic checkpoint measurement, trend detection, classification, reporting, and verification.
+The optional per-claim `threshold` CSV field is retained as descriptive claim metadata; the detector currently scores using its global visible alignment and violation thresholds, not per-claim numeric threshold evaluation.
+
+The current release does **not** infer compliance from raw logs and does **not** parse natural-language policy documents into claims automatically. Policy assertions and evidence classification are supplied as structured input. The engine then performs deterministic checkpoint measurement, trend detection, classification, reporting, and verification.
 
 ## How It Works
 
