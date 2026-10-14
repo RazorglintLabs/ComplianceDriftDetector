@@ -39,6 +39,8 @@ Optional secondary line, only if there is room:
 
 **Razorglint Labs**
 
+**Commercial licensing · OEM partnerships**
+
 ---
 
 Do not add claims such as “certified compliant,” “audit approved,” “guaranteed compliant,” or similar language.
