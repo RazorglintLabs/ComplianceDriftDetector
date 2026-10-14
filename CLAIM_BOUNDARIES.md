@@ -26,7 +26,9 @@ Every public statement, README sentence, and buyer communication must stay withi
 
 The current release does **not** infer compliance from raw logs and does **not** parse natural-language policy documents automatically.
 
-The optional claim-level `threshold` input is stored as claim metadata only; current classification uses global alignment/violation thresholds, rather than evaluating individual numeric testable assertions.\n\nPolicy claims are supplied as structured assertions. Behavior evidence is supplied with a mapped `claim_ref` and a `compliant` boolean. The engine measures and classifies those supplied inputs deterministically.
+The optional claim-level `threshold` input is stored as claim metadata only; current classification uses global alignment/violation thresholds, rather than evaluating individual numeric testable assertions.
+
+Policy claims are supplied as structured assertions. Behavior evidence is supplied with a mapped `claim_ref` and a `compliant` boolean. The engine measures and classifies those supplied inputs deterministically.
 
 ## Forbidden Claims
 
