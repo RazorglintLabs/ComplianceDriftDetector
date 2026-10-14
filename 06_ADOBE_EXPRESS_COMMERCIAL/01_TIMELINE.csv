@@ -6,5 +6,5 @@ scene,start,end,duration,asset_or_card,visual_action,on_screen_text
 04,00:27,00:34,7s,SCENE_04_HTML_REPORT_DETAIL.png,Slow pan to undeclared behavior / thresholds / verification section,"Declared policy and unmatched behavior stay separate."
 05,00:34,00:38,4s,SCENE_05_VERIFY_REPORT_PASS.png,Very subtle zoom toward PASS message,"REPORT INTEGRITY: PASS"
 06,00:38,00:42,4s,SCENE_06_VERIFY_EVIDENCE_PASS.png,Very subtle zoom toward PASS message,"EVIDENCE INTEGRITY: PASS"
-07,00:42,00:48,6s,SCENE_07_FULL_SUITE_VALIDATION.png,Begin on validation scope; move downward to final PASS block,"58/58 AUTOMATED CHECKS PASS"
+07,00:42,00:48,6s,SCENE_07_FULL_SUITE_VALIDATION.png,Begin on validation scope; move downward to final PASS block,"QUALIFIED BUILD — AUTOMATED CHECKS PASS"
 08,00:48,00:52,4s,ADOBE_CARD,Dark end card; product name and company fade in,"Compliance Drift Detector — Evidence over assumption. • Razorglint Labs"
