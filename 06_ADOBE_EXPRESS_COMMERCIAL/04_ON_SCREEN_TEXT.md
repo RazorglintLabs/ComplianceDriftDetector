@@ -26,7 +26,7 @@ Use these as the only major text overlays in the first cut. Keep typography rest
 **EVIDENCE INTEGRITY: PASS**
 
 ## Scene 07 — Validation Console
-**58/58 AUTOMATED CHECKS PASS**
+**AUTOMATED REGRESSION SUITE: PASS**
 
 Optional secondary line, only if there is room:
 
