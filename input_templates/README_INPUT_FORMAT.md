@@ -8,7 +8,7 @@
 | `description` | YES | Human-readable policy statement |
 | `testable_assertion` | YES | Machine-readable assertion |
 | `claim_type` | NO | REQUIREMENT, PROHIBITION, THRESHOLD, PROCESS, CONTROL (default: REQUIREMENT) |
-| `threshold` | NO | Numeric threshold for THRESHOLD-type claims |
+| `threshold` | NO | Descriptive numeric metadata only; NOT used to score claims (global alignment thresholds govern scoring) |
 
 ## behavior_evidence.csv
 
@@ -24,7 +24,7 @@
 ## Rules
 
 - CSV must include a header row
-- `compliant` accepts: `true`, `True`, `TRUE`, `1`, `yes` → compliant; anything else → non-compliant
+- `compliant` accepts: `true`, `True`, `TRUE`, `1`, `yes` → compliant; `false`, `False`, `0`, `no` → non-compliant; all other or blank values are rejected
 - Timestamps must be sortable (ISO 8601 recommended)
 - Use `UNDECLARED-*` prefix in `claim_ref` for behaviors with no governing policy
 - No secrets, credentials, or PII in any field
