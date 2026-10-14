@@ -35,7 +35,14 @@ REQUIRED_EVIDENCE_COLUMNS = {"evidence_id", "timestamp", "claim_ref", "observed_
 
 def parse_bool(value: str) -> bool:
     """Parse a boolean from CSV value."""
-    return value.strip().lower() in ("true", "1", "yes")
+    normalized = value.strip().lower()
+    if normalized in ("true", "1", "yes"):
+        return True
+    if normalized in ("false", "0", "no"):
+        return False
+    raise ValueError(
+        f"Unsupported compliant value {value!r}; expected true/false, 1/0, or yes/no"
+    )
 
 
 def load_csv(path: Path, required_columns: set[str]) -> list[dict]:
@@ -92,12 +99,16 @@ def load_evidence(path: Path) -> list[dict]:
     rows = load_csv(path, REQUIRED_EVIDENCE_COLUMNS)
     evidence = []
     for row in rows:
+        try:
+            compliant = parse_bool(row["compliant"])
+        except ValueError as exc:
+            raise ValueError(f"{path.name}: evidence_id={row['evidence_id']!r}: {exc}") from exc
         ev = {
             "evidence_id": row["evidence_id"].strip(),
             "timestamp": row["timestamp"].strip(),
             "claim_ref": row["claim_ref"].strip(),
             "observed_value": row["observed_value"].strip(),
-            "compliant": parse_bool(row["compliant"]),
+            "compliant": compliant,
             "source": row.get("source", "UNKNOWN").strip() or "UNKNOWN",
         }
         evidence.append(ev)
@@ -129,7 +140,11 @@ def main():
     print(f"  {len(policies)} policy claim(s) loaded.")
 
     print("Loading behavior evidence...")
-    evidence = load_evidence(evidence_path)
+    try:
+        evidence = load_evidence(evidence_path)
+    except ValueError as exc:
+        print(f"ERROR: {exc}")
+        raise SystemExit(1) from exc
     print(f"  {len(evidence)} evidence record(s) loaded.")
 
     # Run detector
