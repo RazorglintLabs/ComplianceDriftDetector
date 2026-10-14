@@ -23,8 +23,13 @@ class TestParseBool:
             assert parse_bool(v) is True
 
     def test_false_values(self):
-        for v in ("false", "False", "0", "no", "No", "", "anything"):
+        for v in ("false", "False", "0", "no", "No"):
             assert parse_bool(v) is False
+
+    @pytest.mark.parametrize("invalid", ["", "anything", "maybe", "FALSEE", "0.0"])
+    def test_invalid_values_fail_closed(self, invalid):
+        with pytest.raises(ValueError, match="Unsupported compliant value"):
+            parse_bool(invalid)
 
     def test_whitespace(self):
         assert parse_bool("  true  ") is True
@@ -193,3 +198,13 @@ class TestHtmlReport:
         html = render_html_report(report)
         assert "<script>" not in html
         assert "&lt;script&gt;" in html
+
+def test_malformed_compliant_csv_row_is_rejected(tmp_path):
+    p = tmp_path / "bad_evidence.csv"
+    p.write_text(
+        "evidence_id,timestamp,claim_ref,observed_value,compliant,source\n"
+        "EV-42,2026-01-01T00:00:00Z,P1,ok,maybe,example\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="EV-42"):
+        load_evidence(p)
