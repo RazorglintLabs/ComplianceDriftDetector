@@ -35,7 +35,7 @@ Follow `01_TIMELINE.csv` exactly for the first cut. It is intentionally simple s
 - Do not expose source code, test names, private implementation details, secrets, tokens, or customer data.
 - The validation console is safe for buyer/demo use by design and should be used instead of raw pytest output.
 
-## Product-claim boundary
+**Release-evidence gate:** Capture Scene 07 from the exact approved release candidate. The historical 58/58 screenshot/overlay is stale relative to subsequent test additions; do not reuse fixed test counts without matching the pictured build and current CI.\n\n## Product-claim boundary
 The commercial may say CDD compares structured policy claims with supplied behavior evidence, detects drift/violations/undeclared behavior, exports reports/evidence, and independently verifies generated artifact integrity.
 
 Do not present CDD as regulatory certification, an accredited audit, or proof that supplied source data is truthful or complete.
