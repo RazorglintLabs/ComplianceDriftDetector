@@ -168,6 +168,10 @@ This repository is published for evaluation and buyer demonstration. No open-sou
 
 Commercial use, resale, hosted-service use, redistribution, or modified redistribution requires written permission from Razorglint Labs / TCOG Collective LLC.
 
+## Commercial strategy (October 2026)
+
+**Razorglint Labs retains ComplianceDriftDetector IP.** The commercial focus is ongoing licenses, paid evaluations, and separately negotiated OEM/embedding arrangements; this project is **not generally offered for outright sale**. The historical Sale 01 acquisition plan is superseded by [the current licensing decision](SALE_01/COMMERCIAL_STRATEGY_LICENSE_FIRST_2026-10-14.md). Enterprise/OEM rights and pricing require a separate agreement and are not included in the standard tiers below.
+
 ## Monthly Licenses
 
 | Tier | Price | Best For |
