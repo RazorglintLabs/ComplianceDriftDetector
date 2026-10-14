@@ -31,5 +31,8 @@ Compliance Drift Detector. Evidence over assumption. Razorglint Labs.
 ## Delivery direction
 Calm, controlled, technical, confident. Avoid trailer-style exaggeration. Let the product screens and PASS evidence carry the weight.
 
+## Commercial boundary
+**This video supports licensing and OEM partnerships, not an outright IP sale.** Razorglint Labs retains ownership. The end-card CTA is for licensing/OEM discussions.
+
 ## Claim boundary
 Do not imply regulatory certification, accredited audit status, or validation of the truth/completeness of supplied source data.
