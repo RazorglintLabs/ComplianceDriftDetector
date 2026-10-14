@@ -42,7 +42,7 @@
 - [ ] No customer/private data visible
 - [ ] Report verification PASS readable
 - [ ] Evidence verification PASS readable
-- [ ] 58/58 validation PASS readable
+- [ ] Current build-bound regression PASS readable; test count, if shown, matches the exact qualified commit
 - [ ] No claim of regulatory certification or accredited audit
 - [ ] Final end card visible for at least 3 seconds
 - [ ] Export 1080p MP4
