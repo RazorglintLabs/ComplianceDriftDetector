@@ -353,8 +353,21 @@ class DriftUI(tk.Tk):
 
     def _build_export_page(self) -> None:
         page = self._page("export")
-        content = tk.Frame(page, bg=BG)
-        content.pack(fill="both", expand=True, padx=44, pady=30)
+        # Export cards can exceed the viewport at 125–150% Windows DPI. Keep
+        # both verification and report-opening controls reachable by scrolling.
+        viewport = tk.Canvas(page, bg=BG, bd=0, highlightthickness=0)
+        scrollbar = ttk.Scrollbar(page, orient="vertical", command=viewport.yview)
+        viewport.configure(yscrollcommand=scrollbar.set)
+        scrollbar.pack(side="right", fill="y")
+        viewport.pack(side="left", fill="both", expand=True)
+        scroll_body = tk.Frame(viewport, bg=BG)
+        window_id = viewport.create_window((0, 0), window=scroll_body, anchor="nw")
+        scroll_body.bind("<Configure>", lambda _e: viewport.configure(scrollregion=viewport.bbox("all")))
+        viewport.bind("<Configure>", lambda e: viewport.itemconfigure(window_id, width=e.width))
+        self.export_scroll_canvas = viewport
+
+        content = tk.Frame(scroll_body, bg=BG)
+        content.pack(fill="both", expand=True, padx=44, pady=24)
 
         top = tk.Frame(content, bg=BG)
         top.pack(fill="x")
@@ -367,7 +380,7 @@ class DriftUI(tk.Tk):
             bg=BG,
             fg=MUTED,
             font=FONT,
-        ).pack(anchor="w", pady=(6, 18))
+        ).pack(anchor="w", pady=(4, 12))
 
         columns = tk.Frame(content, bg=BG)
         columns.pack(fill="both", expand=True)
@@ -377,7 +390,7 @@ class DriftUI(tk.Tk):
 
         package = self._panel(columns)
         package.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
-        tk.Label(package, text="Report package", bg=PANEL, fg=TEXT, font=FONT_SECTION).pack(anchor="w", padx=20, pady=(18, 12))
+        tk.Label(package, text="Report package", bg=PANEL, fg=TEXT, font=FONT_SECTION).pack(anchor="w", padx=20, pady=(15, 8))
         for filename, meaning in (
             ("drift_report.html", "Browser-viewable executive report"),
             ("drift_report.md", "Human-readable Markdown report"),
@@ -385,12 +398,12 @@ class DriftUI(tk.Tk):
             ("drift_evidence.json", "Evidence export with hashes"),
         ):
             row = tk.Frame(package, bg=PANEL_ALT, highlightthickness=1, highlightbackground="#454A52")
-            row.pack(fill="x", padx=20, pady=5)
-            tk.Label(row, text=filename, bg=PANEL_ALT, fg=TEXT, font=FONT_BOLD).pack(anchor="w", padx=12, pady=(8, 0))
-            tk.Label(row, text=meaning, bg=PANEL_ALT, fg=MUTED, font=FONT_SMALL).pack(anchor="w", padx=12, pady=(0, 8))
+            row.pack(fill="x", padx=20, pady=3)
+            tk.Label(row, text=filename, bg=PANEL_ALT, fg=TEXT, font=FONT_BOLD).pack(anchor="w", padx=12, pady=(6, 0))
+            tk.Label(row, text=meaning, bg=PANEL_ALT, fg=MUTED, font=FONT_SMALL).pack(anchor="w", padx=12, pady=(0, 6))
 
         pkg_actions = tk.Frame(package, bg=PANEL)
-        pkg_actions.pack(fill="x", padx=20, pady=18)
+        pkg_actions.pack(fill="x", padx=20, pady=(10, 12))
         self._button(pkg_actions, "Open HTML", self.open_html).pack(side="left")
         self._button(pkg_actions, "Open output folder", self.open_output_folder).pack(side="left", padx=(8, 0))
 
@@ -436,6 +449,20 @@ class DriftUI(tk.Tk):
             wraplength=500,
             justify="left",
         ).pack(anchor="w", padx=20, pady=(18, 18))
+
+        def on_wheel(event) -> str | None:
+            # Windows mouse wheels report multiples of 120.
+            if event.delta:
+                viewport.yview_scroll(-int(event.delta / 120), "units")
+                return "break"
+            return None
+
+        def bind_wheel_recursively(widget) -> None:
+            widget.bind("<MouseWheel>", on_wheel, add="+")
+            for child in widget.winfo_children():
+                bind_wheel_recursively(child)
+
+        bind_wheel_recursively(viewport)
 
     def show_page(self, name: str) -> None:
         sections = {
