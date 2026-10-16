@@ -12,14 +12,14 @@
 6. Open HTML or **Open output folder** to see your results.
 
 The app keeps local outputs at:
-`%LOCALAPPDATA%\\RazorglintLabs\\ComplianceDriftDetector\\output`
+`%LOCALAPPDATA%\RazorglintLabs\ComplianceDriftDetector\output`
 
 Your own CSV files can be chosen from anywhere you are authorized to access. Bundled examples are synthetic. CDD **does not transmit customer data**. It checks data already classified and provided by the operator; it does not read raw logs or certify regulatory compliance.
 
 ## Version verification
 
 Verify the distributed EXE checksum against the accompanying `SHA256SUMS.txt` using Windows PowerShell:
-`Get-FileHash .\\ComplianceDriftDetector.exe -Algorithm SHA256`
+`Get-FileHash .\ComplianceDriftDetector.exe -Algorithm SHA256`
 
 **Build provenance:** see `BUILD_PROVENANCE.json` in the extracted package. The package was assembled on a Windows GitHub Actions runner from an exact Git commit and smoke-tested as a compiled executable; the current v0.2 build received a native owner GUI walkthrough on October 16, 2026. Details and exact checksums: [release status](docs/RELEASE_STATUS.md).
 
