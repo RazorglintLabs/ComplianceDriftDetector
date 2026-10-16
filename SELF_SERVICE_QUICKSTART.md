@@ -1,6 +1,6 @@
-# Self-Service Quickstart
+# Python Source/CLI Quickstart
 
-**Run a compliance drift scan locally in about 60 seconds. No cloud service, account, or production credentials required.**
+**For Python/CLI users.** Windows customers can use the [standalone portable EXE](WINDOWS_EXE_QUICKSTART.md) without installing Python. This source workflow runs locally without a cloud service or production credentials.
 
 ---
 
@@ -12,7 +12,7 @@
 
 The current release expects each behavior-evidence row to include a supplied `compliant` true/false value. It does **not** infer compliance from raw logs or parse natural-language policy documents automatically.
 
-No pip install, API key, or account is required for the core scanner.
+No pip install, API key, or account is required for the core scanner. **Note:** per-claim numeric thresholds (e.g. 24 hours) and `testable_assertion` are descriptive input metadata; the operator must supply the pre-classified `compliant` values. CDD uses global alignment thresholds for scoring.
 
 ---
 
@@ -87,7 +87,7 @@ python software/verify.py output/drift_report.json
 python software/verify.py output/drift_evidence.json
 ```
 
-The report verifier checks structure, state-count/alignment consistency, and the run-specific report seal. The evidence verifier checks every exported claim/evidence item hash plus the aggregate policy and behavior hashes.
+**v2** report verification checks detailed analyses and checkpoint history in addition to structure and summary; **v2** evidence verification also binds all exported metadata. Legacy v1 artifacts are accepted with explicit limited-coverage warnings. These unkeyed hashes do not authenticate the source or prevent deliberate editing followed by re-hashing.
 
 PASS means the supported artifact is internally consistent with those checks. It does **not** establish that the source data is true, complete, independently collected, or compliant with a regulation or standard.
 
@@ -105,7 +105,7 @@ If you run without an `input/` directory, the tool runs a built-in demo scenario
 - Groups evidence into dated checkpoints
 - Classifies each claim as ALIGNED, DRIFTING, VIOLATED, or UNDECLARED using visible thresholds
 - Tracks trend direction across supplied checkpoints
-- Exports report metadata and evidence hashes for tamper-evident verification
+- Exports versioned report and evidence hashes for internal consistency checking
 
 ## What This Does NOT Do
 
