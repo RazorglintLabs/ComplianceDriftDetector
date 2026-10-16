@@ -2,7 +2,7 @@ name: Windows native CDD executable
 
 on:
   push:
-    branches: [main, "release/windows-native-exe-v0-2"]
+    branches: [main, "release/**"]
   pull_request:
     branches: [main]
   workflow_dispatch:
