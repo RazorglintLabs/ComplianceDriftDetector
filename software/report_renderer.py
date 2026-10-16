@@ -7,7 +7,7 @@ Produces human-readable drift reports.
 from __future__ import annotations
 
 import json
-from compliance_drift_detector import DriftReport, DriftState
+from compliance_drift_detector import DriftReport, DriftState, report_detail_payload
 
 try:
     from ui_semantics import history_status
@@ -121,19 +121,20 @@ def render_markdown_report(report: DriftReport) -> str:
     lines.append("")
     lines.append("## Verification")
     lines.append("")
-    lines.append("Supported JSON artifacts can be checked with the included verifier:")
+    lines.append("Use **Export & Verify** inside the CDD Windows desktop app to check the generated JSON artifacts.")
+    lines.append("If using the Python source distribution, the CLI commands are:")
     lines.append("")
     lines.append("```bash")
     lines.append("python software/verify.py output/drift_report.json")
     lines.append("python software/verify.py output/drift_evidence.json")
     lines.append("```")
     lines.append("")
-    lines.append("- `drift_report.json`: checks structure, state-count/alignment consistency, and the run-specific report seal.")
+    lines.append("- `drift_report.json`: version 2 verifies the exported analyses, checkpoint history and undeclared findings **as well as** structure and summary consistency; older version 1 files receive explicitly limited verification.")
     lines.append("- `drift_evidence.json`: checks every exported item hash plus aggregate policy/behavior hashes.")
     lines.append("- `policy_hash` and `behavior_hash` are deterministic for the same ordered structured inputs.")
     lines.append("- `report_hash` is run-specific because `generated_at` is part of its sealed payload; a later re-run is expected to have a different report hash.")
     lines.append("")
-    lines.append("Verification establishes artifact consistency and tamper evidence. It does not validate the truth, completeness, or provenance of the supplied source data.")
+    lines.append("Verification checks unkeyed content hashes: an attacker who can rewrite content and recompute hashes can create another self-consistent file. It does not establish authenticated origin or validate the truth, completeness, or provenance of the supplied source data.")
     lines.append("")
     lines.append("---")
     lines.append("")
@@ -144,8 +145,10 @@ def render_markdown_report(report: DriftReport) -> str:
 
 
 def render_json_report(report: DriftReport) -> str:
-    """Render machine-readable JSON report."""
+    """Render machine-readable JSON using exactly the versioned sealed details."""
+    details = report_detail_payload(report)
     output = {
+        "report_seal_version": report.report_seal_version,
         "generated_at": report.generated_at,
         "policy_hash": report.policy_hash,
         "behavior_hash": report.behavior_hash,
@@ -153,38 +156,6 @@ def render_json_report(report: DriftReport) -> str:
         "total_claims": report.total_claims,
         "total_evidence": report.total_evidence,
         "summary": report.summary,
-        "analyses": [
-            {
-                "claim_id": a.claim_id,
-                "claim_description": a.claim_description,
-                "state": a.state.value,
-                "reason": a.reason,
-                "current_alignment": a.current_alignment,
-                "trend": a.trend,
-                "first_drift_time": a.first_drift_time,
-                "violation_count": a.violation_count,
-                "checkpoint_count": len(a.checkpoints),
-                "checkpoints": [
-                    {
-                        "time": cp.checkpoint_time,
-                        "alignment": cp.alignment_score,
-                        "evidence_count": cp.evidence_count,
-                        "compliant_count": cp.compliant_count,
-                        "evidence_hash": cp.evidence_hash,
-                    }
-                    for cp in a.checkpoints
-                ],
-            }
-            for a in report.analyses
-        ],
-        "undeclared_behaviors": [
-            {
-                "pattern": ub.behavior_pattern,
-                "occurrences": ub.occurrence_count,
-                "first_seen": ub.first_seen,
-                "last_seen": ub.last_seen,
-            }
-            for ub in report.undeclared_behaviors
-        ],
+        **details,
     }
     return json.dumps(output, indent=2)

@@ -42,6 +42,14 @@ def run_smoke() -> dict:
     assert ok_evidence, reason_evidence
     assert "RECOVERED" in render_html_report(report)
     assert "RECOVERED" in render_markdown_report(report)
+    # The entire v2 report (including detail) must be sealed, not just the summary.
+    rendered["analyses"][0]["reason"] = "REWRITTEN-DETAILED-REASON"
+    ok_changed_detail, _ = verify_drift_report(rendered)
+    assert not ok_changed_detail, "Verifier accepted changed report detail"
+    # V2 evidence package must cover source labels, not only legacy item hashes.
+    exported["behavior_evidence"][0]["source"] = "TAMPERED-SOURCE"
+    ok_source_tamper, _ = verify_drift_evidence(exported)
+    assert not ok_source_tamper, "Verifier accepted changed source label"
     # Deliberate mutation: should be detected. Do not use real customer data.
     exported["behavior_evidence"][0]["observed_value"] = "TAMPERED-SMOKE"
     ok_tampered, _ = verify_drift_evidence(exported)
@@ -52,6 +60,7 @@ def run_smoke() -> dict:
         "claim_states": counts, "undeclared_behavior_findings": unmatched,
         "ci_history": "RECOVERED", "report_verifier": "PASS",
         "evidence_verifier": "PASS", "tamper_negative_test": "PASS",
+        "report_detail_tamper_negative_test": "PASS",
         "bundled_sample_available": True,
         "writable_report_directory": str(reports_dir()),
         "limitations": "No GUI clicks or native-install signing covered by this smoke test",

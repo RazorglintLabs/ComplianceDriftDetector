@@ -121,10 +121,11 @@ python software/verify.py output/drift_evidence.json
 ```
 
 The verifier checks:
-- report structure, state-count consistency, aligned-percentage consistency, and the report metadata/summary seal;
+- version 2 JSON report structure, state-count consistency, aligned-percentage consistency, and a full content hash of metadata, summary, analyses, checkpoint history and undeclared findings (older v1 records are labeled as limited summary-only verification);
 - every exported policy-claim hash;
 - every exported behavior-evidence hash;
-- aggregate policy and behavior hashes.
+- aggregate policy and behavior hashes;
+- in v2 exports, a full-package hash also covers descriptions, source labels, and all other exported JSON fields. Legacy v1 export verification is explicitly labeled limited.
 
 It returns PASS or FAIL. Verification establishes artifact consistency and tamper evidence; it does **not** establish that the supplied source data is true, complete, regulatory-compliant, or independently collected from production systems.
 
