@@ -29,7 +29,7 @@ def verify_drift_report(data: dict) -> tuple[bool, str]:
     1. Claim count matches declared total
     2. Drift states, trends, and alignment values are valid
     3. Summary state counts and aligned percentage match analyses
-    4. The report hash matches the sealed report metadata/summary payload
+    4. Version 2 hashes metadata, summary, all claim/checkpoint detail and undeclared findings\n    5. Legacy version 1 hashes metadata/summary only and is labeled LIMITED
     """
     try:
         analyses = data.get("analyses", [])
@@ -77,6 +77,7 @@ def verify_drift_report(data: dict) -> tuple[bool, str]:
                 f"expected {expected_aligned_pct}"
             )
 
+        version = data.get("report_seal_version")
         seal_payload = {
             "generated_at": data["generated_at"],
             "policy_hash": data["policy_hash"],
@@ -85,15 +86,43 @@ def verify_drift_report(data: dict) -> tuple[bool, str]:
             "total_evidence": total_evidence,
             "summary": summary,
         }
+        if type(version) is int and version == 2:
+            # Version 2 binds all machine-readable fields a recipient can inspect.
+            undeclared = data["undeclared_behaviors"]
+            if not isinstance(undeclared, list):
+                return False, "Malformed v2 report: undeclared_behaviors is not a list"
+            if summary.get("undeclared_behavior_count") != len(undeclared):
+                return False, "Undeclared finding count mismatch"
+            for i, analysis in enumerate(analyses):
+                checkpoints = analysis["checkpoints"]
+                if not isinstance(checkpoints, list) or analysis["checkpoint_count"] != len(checkpoints):
+                    return False, f"Analysis {i}: checkpoint count mismatch"
+                if checkpoints and analysis["current_alignment"] != checkpoints[-1]["alignment"]:
+                    return False, f"Analysis {i}: current alignment does not match latest checkpoint"
+            seal_payload.update({
+                "report_seal_version": 2,
+                "analyses": analyses,
+                "undeclared_behaviors": undeclared,
+            })
+        elif version is not None:
+            return False, f"Unsupported report_seal_version: {version!r}"
         expected_report_hash = sha256(json.dumps(seal_payload, sort_keys=True))
         actual_report_hash = data.get("report_hash", "")
         if actual_report_hash != expected_report_hash:
             return False, "Report hash mismatch"
 
-    except (KeyError, TypeError, ValueError) as exc:
+    except (KeyError, TypeError, ValueError, IndexError) as exc:
         return False, f"Malformed drift report: {exc}"
 
-    return True, f"Drift report verified: {len(analyses)} claims, structure + report seal PASS"
+    if version is None:
+        return True, (
+            f"Legacy v1 report verified: {len(analyses)} claims, LIMITED summary-only "
+            "report seal PASS; detailed findings/checkpoints are NOT sealed"
+        )
+    return True, (
+        f"Drift report verified: {len(analyses)} claims, structure + full v2 content "
+        "report seal PASS (not authenticated source provenance)"
+    )
 
 
 def verify_drift_evidence(data: dict) -> tuple[bool, str]:
