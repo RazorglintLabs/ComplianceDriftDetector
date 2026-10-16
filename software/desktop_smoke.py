@@ -46,7 +46,7 @@ def run_smoke() -> dict:
     rendered["analyses"][0]["reason"] = "REWRITTEN-DETAILED-REASON"
     ok_changed_detail, _ = verify_drift_report(rendered)
     assert not ok_changed_detail, "Verifier accepted changed report detail"
-    # Deliberate mutation: should be detected. Do not use real customer data.
+    # V2 evidence package must cover source labels, not only legacy item hashes.\n    exported["behavior_evidence"][0]["source"] = "TAMPERED-SOURCE"\n    ok_source_tamper, _ = verify_drift_evidence(exported)\n    assert not ok_source_tamper, "Verifier accepted changed source label"\n    # Deliberate mutation: should be detected. Do not use real customer data.
     exported["behavior_evidence"][0]["observed_value"] = "TAMPERED-SMOKE"
     ok_tampered, _ = verify_drift_evidence(exported)
     assert not ok_tampered, "Verifier accepted changed evidence"
