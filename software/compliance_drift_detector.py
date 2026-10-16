@@ -105,6 +105,69 @@ class DriftReport:
     undeclared_behaviors: list[UndeclaredBehavior] = field(default_factory=list)
     summary: dict = field(default_factory=dict)
     report_hash: str = ""
+    report_seal_version: int = 2
+
+def report_detail_payload(report: DriftReport) -> dict:
+    """Canonical JSON-compatible details that are included in the v2 report seal.
+
+    The same structure is used by the JSON renderer. This covers *displayed*
+    analyses and undeclared findings, not just their summary counts.
+    """
+    return {
+        "analyses": [
+            {
+                "claim_id": a.claim_id,
+                "claim_description": a.claim_description,
+                "state": a.state.value,
+                "reason": a.reason,
+                "current_alignment": a.current_alignment,
+                "trend": a.trend,
+                "first_drift_time": a.first_drift_time,
+                "violation_count": a.violation_count,
+                "checkpoint_count": len(a.checkpoints),
+                "checkpoints": [
+                    {
+                        "time": cp.checkpoint_time,
+                        "alignment": cp.alignment_score,
+                        "evidence_count": cp.evidence_count,
+                        "compliant_count": cp.compliant_count,
+                        "evidence_hash": cp.evidence_hash,
+                    }
+                    for cp in a.checkpoints
+                ],
+            }
+            for a in report.analyses
+        ],
+        "undeclared_behaviors": [
+            {
+                "pattern": ub.behavior_pattern,
+                "occurrences": ub.occurrence_count,
+                "first_seen": ub.first_seen,
+                "last_seen": ub.last_seen,
+            }
+            for ub in report.undeclared_behaviors
+        ],
+    }
+
+
+def report_seal_payload(report: DriftReport) -> dict:
+    """The exact versioned JSON fields covered by report_hash."""
+    return {
+        "report_seal_version": report.report_seal_version,
+        "generated_at": report.generated_at,
+        "policy_hash": report.policy_hash,
+        "behavior_hash": report.behavior_hash,
+        "total_claims": report.total_claims,
+        "total_evidence": report.total_evidence,
+        "summary": report.summary,
+        **report_detail_payload(report),
+    }
+
+
+def seal_report(report: DriftReport) -> DriftReport:
+    """Seal a report for consistency verification (not origin authentication)."""
+    report.report_hash = sha256(json.dumps(report_seal_payload(report), sort_keys=True))
+    return report
 
 
 def sha256(data: str) -> str:
@@ -357,14 +420,14 @@ class ComplianceDriftDetector:
         detects drift, produces sealed report.
         """
         if not self.claims:
-            return DriftReport(
+            return seal_report(DriftReport(
                 generated_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
                 policy_hash=sha256("EMPTY"),
                 behavior_hash=sha256("EMPTY"),
                 total_claims=0,
                 total_evidence=0,
                 summary={"verdict": "NO_POLICIES"},
-            )
+            ))
 
         # Hash inputs
         policy_hash = hash_policy(self.claims)
@@ -434,18 +497,8 @@ class ComplianceDriftDetector:
             summary=summary,
         )
 
-        # Seal the report
-        seal_content = json.dumps({
-            "generated_at": report.generated_at,
-            "policy_hash": report.policy_hash,
-            "behavior_hash": report.behavior_hash,
-            "total_claims": report.total_claims,
-            "total_evidence": report.total_evidence,
-            "summary": report.summary,
-        }, sort_keys=True)
-        report.report_hash = sha256(seal_content)
-
-        return report
+        # Version 2: include all exported analysis and undeclared-behavior details.
+        return seal_report(report)
 
     def export_evidence(self) -> dict:
         """Export full evidence set with hashes for independent verification."""
