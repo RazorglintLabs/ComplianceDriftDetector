@@ -56,6 +56,7 @@ def run_smoke() -> dict:
         "claim_states": counts, "undeclared_behavior_findings": unmatched,
         "ci_history": "RECOVERED", "report_verifier": "PASS",
         "evidence_verifier": "PASS", "tamper_negative_test": "PASS",
+        "report_detail_tamper_negative_test": "PASS",
         "bundled_sample_available": True,
         "writable_report_directory": str(reports_dir()),
         "limitations": "No GUI clicks or native-install signing covered by this smoke test",
