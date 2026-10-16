@@ -463,7 +463,6 @@ class DriftUI(tk.Tk):
                 bind_wheel_recursively(child)
 
         bind_wheel_recursively(viewport)
-        bind_wheel_recursively(scroll_body)
 
     def show_page(self, name: str) -> None:
         sections = {
