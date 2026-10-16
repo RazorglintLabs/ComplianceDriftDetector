@@ -23,7 +23,7 @@ ROOT_FILES = {
     "TERMS_OF_SERVICE.md", "PRIVACY_POLICY.md",
     "REFUND_AND_CANCELLATION_POLICY.md",
     "START_HERE.bat", "START_UI.bat",
-    "RUN_SALE_01_VALIDATION.bat", "pyproject.toml",
+    "pyproject.toml",
 }
 SCOPE_NOTE = """Compliance Drift Detector — proprietary local evaluation kit
 

@@ -1,7 +1,7 @@
-name: Sale 01 qualification
+name: CDD qualification
 on:
   push:
-    branches: [main, "sale01/**"]
+    branches: [main, "release/**"]
   pull_request:
     branches: [main]
   workflow_dispatch:

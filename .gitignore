@@ -9,4 +9,8 @@ dist/
 build/
 .pytest_cache/
 output/
+input/
 *.zip
+*.spec
+.DS_Store
+Thumbs.db
