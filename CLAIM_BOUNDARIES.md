@@ -12,7 +12,7 @@ Every public statement, README sentence, and buyer communication must stay withi
 | # | Claim | Evidence |
 |---|-------|----------|
 | 1 | "Detects drift between stated policy claims and supplied behavior evidence" | Core engine classifies ALIGNED / DRIFTING / VIOLATED / UNDECLARED from structured inputs |
-| 2 | "Produces tamper-evident report metadata and hash-anchored evidence exports" | SHA-256 report seal, per-item evidence hashes, aggregate policy/behavior hashes |
+| 2 | "Produces versioned, hash-verifiable JSON report and evidence artifacts" | v2 full JSON package seals, per-item and aggregate evidence hashes; older v1 checks explicitly limited |
 | 3 | "Core scanner/verifier use zero external Python packages" | stdlib-only core; optional desktop UI uses Tkinter |
 | 4 | "Deterministic classification for the same structured inputs and thresholds" | Visible threshold logic and repeatable checkpoint measurement |
 | 5 | "All scoring rules visible in source" | AlignmentEngine thresholds are configurable and rendered in output |
@@ -20,9 +20,9 @@ Every public statement, README sentence, and buyer communication must stay withi
 | 7 | "Supported JSON artifacts are independently verifiable" | verify.py checks report seal/consistency plus all exported item and aggregate hashes |
 | 8 | "Checkpoint-based evidence between audit points" | Evidence is grouped into dated checkpoints and compared longitudinally |
 | 9 | "Surfaces undeclared behavior references" | Unmatched evidence references prefixed `UNDECLARED-` are reported separately |
-| 10 | "Current qualified test suite passes in the sealed sale build" | Fresh qualification receipt records the exact candidate and test result |
+| 10 | "Accepted Windows v0.2 binary passed the qualification and owner walkthrough" | [Accepted build and qualification receipts](docs/RELEASE_STATUS.md) |
 
-## Required Input Boundary
+Version 2 checks detect unauthorized changes **unless** an adversary can recompute the unkeyed hashes. Hash checks do not authenticate who originally supplied the evidence or prove its accuracy. HTML and Markdown are human-readable renderings, not separately signed deliverables.\n\n## Required Input Boundary
 
 The current release does **not** infer compliance from raw logs and does **not** parse natural-language policy documents automatically.
 
@@ -52,7 +52,7 @@ Policy claims are supplied as structured assertions. Behavior evidence is suppli
 |-----|-----------|
 | "Drift detection" | "Compliance assurance" |
 | "Policy-behavior gap measurement" | "Compliance verification" |
-| "Tamper-evident" | "Tamper-proof" |
+| "Unkeyed SHA-256 consistency checks" | "Authenticated provenance" or "tamper-proof" |
 | "Evidence for audit preparation" | "Replaces auditors" |
 | "Readiness evidence" | "Certification" |
 | "Checkpoint-based" | "Real-time" |
