@@ -4,7 +4,7 @@
 
 ## Start
 
-1. Download the release ZIP from the verified GitHub Actions artifact or approved release distribution.
+1. Download the release ZIP from the exact qualified GitHub Actions artifact or an approved evaluation distribution (the older v0.1.x tagged release is not the current Windows EXE).
 2. Extract it to a normal local directory. Do **not** run the executable while it is inside a ZIP.
 3. Double-click **ComplianceDriftDetector.exe**. No `.bat`, Python, terminal, cloud account, or installer is required.
 4. Press **Load example**, then **Run Compliance Drift Scan**. Select the recovered CI-pipeline claim if you want to inspect recovery.
@@ -21,9 +21,9 @@ Your own CSV files can be chosen from anywhere you are authorized to access. Bun
 Verify the distributed EXE checksum against the accompanying `SHA256SUMS.txt` using Windows PowerShell:
 `Get-FileHash .\\ComplianceDriftDetector.exe -Algorithm SHA256`
 
-**Build provenance:** see `BUILD_PROVENANCE.json` in the extracted package. The package was assembled on a Windows GitHub Actions runner from an exact Git commit and smoke-tested as a compiled executable; a human GUI walkthrough is still a separate release gate.
+**Build provenance:** see `BUILD_PROVENANCE.json` in the extracted package. The package was assembled on a Windows GitHub Actions runner from an exact Git commit and smoke-tested as a compiled executable; the current v0.2 build received a native owner GUI walkthrough on October 16, 2026. Details and exact checksums: [release status](docs/RELEASE_STATUS.md).
 
-**Windows reputation warning:** This first build is **unsigned**. Windows SmartScreen or antivirus tools may warn about an unfamiliar executable. Verify its origin/checksum and follow your organization's security policy; **do not disable antivirus or bypass corporate security controls**. A signed, professionally distributed installer requires a separate code-signing/reputation process.
+**Windows reputation warning:** The current v0.2 technical preview is **unsigned**. Windows SmartScreen or antivirus tools may warn about an unfamiliar executable. Verify its origin/checksum and follow your organization's security policy; **do not disable antivirus or bypass corporate security controls**. A signed, professionally distributed installer requires a separate code-signing/reputation process.
 
 ## Important operational notes
 
