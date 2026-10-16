@@ -187,7 +187,8 @@ class TestHtmlReport:
         assert "not</strong> a compliance certification" in html
         assert "does <strong>not</strong> validate the truth" in html
         assert "does <strong>not</strong> infer compliance from raw logs" in html
-        assert "Export &amp; Verify" in html\n        assert "no Python installation is required" in html
+        assert "Export &amp; Verify" in html
+        assert "no Python installation is required" in html
 
     def test_html_escapes_dangerous_input(self):
         det = ComplianceDriftDetector()
