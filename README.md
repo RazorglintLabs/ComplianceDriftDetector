@@ -32,6 +32,8 @@ Evidence rows whose `claim_ref` begins with `UNDECLARED-` and does not match a p
 
 ### Important input boundary
 
+The optional per-claim `threshold` CSV field is retained as descriptive claim metadata; the detector currently scores using its global visible alignment and violation thresholds, not per-claim numeric threshold evaluation.
+
 The current release does **not** infer compliance from raw logs and does **not** parse natural-language policy documents into claims automatically. Policy assertions and evidence classification are supplied as structured input. The engine then performs deterministic checkpoint measurement, trend detection, classification, reporting, and verification.
 
 ## How It Works
@@ -82,7 +84,7 @@ The local scanner does not upload your data or require an internet connection.
 The Sale 01 desktop UI is a thin local shell over the same CSV loaders, deterministic engine, report renderers, and verifier.
 
 ```bash
-python software/ui_app.py
+python software/ui_app_sale01.py
 ```
 
 **Windows users:** Double-click `START_UI.bat`.
@@ -165,6 +167,10 @@ Copyright © 2026 Razorglint Labs / TCOG Collective LLC. All rights reserved.
 This repository is published for evaluation and buyer demonstration. No open-source license is granted. See `NOTICE.md`.
 
 Commercial use, resale, hosted-service use, redistribution, or modified redistribution requires written permission from Razorglint Labs / TCOG Collective LLC.
+
+## Commercial strategy (October 2026)
+
+**Razorglint Labs retains ComplianceDriftDetector IP.** The commercial focus is ongoing licenses, paid evaluations, and separately negotiated OEM/embedding arrangements; this project is **not generally offered for outright sale**. The historical Sale 01 acquisition plan is superseded by [the current licensing decision](SALE_01/COMMERCIAL_STRATEGY_LICENSE_FIRST_2026-10-14.md). Enterprise/OEM rights and pricing require a separate agreement and are not included in the standard tiers below.
 
 ## Monthly Licenses
 
