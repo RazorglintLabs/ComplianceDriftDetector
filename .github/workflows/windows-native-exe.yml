@@ -1,0 +1,61 @@
+name: Windows native CDD executable
+
+on:
+  push:
+    branches: [main, "release/windows-native-exe-v0-2"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows-exe:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@v4
+      - name: Install Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: x64
+      - name: Install build tooling
+        run: python -m pip install pytest==9.0.1 pyinstaller==6.16.0
+      - name: Full source qualification
+        run: python -m pytest -q
+      - name: Compile Tkinter UI and synthetic examples into one EXE
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name ComplianceDriftDetector --paths software --add-data "examples/template_packs;examples/template_packs" software/ui_app_sale01.py
+          if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed" }
+          if (!(Test-Path "dist/ComplianceDriftDetector.exe")) { throw "Missing native EXE" }
+      - name: Execute packaged Windows EXE from separate temporary directory
+        shell: pwsh
+        run: |
+          $report = Join-Path $env:RUNNER_TEMP "CDD_EXE_SMOKE.json"
+          $exe = (Resolve-Path "dist/ComplianceDriftDetector.exe").Path
+          $work = Join-Path $env:RUNNER_TEMP "CDD_native_cleanroom"
+          New-Item -ItemType Directory -Force -Path $work | Out-Null
+          $p = Start-Process -FilePath $exe -WorkingDirectory $work -ArgumentList @("--smoke-test", "--smoke-report", $report) -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "Packaged EXE smoke exited $($p.ExitCode)" }
+          if (!(Test-Path $report)) { throw "Packaged EXE produced no smoke report" }
+          $smoke = Get-Content $report -Raw | ConvertFrom-Json
+          if ($smoke.result -ne "PASS" -or $smoke.ci_history -ne "RECOVERED" -or $smoke.tamper_negative_test -ne "PASS") { throw "Frozen EXE smoke invalid" }
+          Copy-Item $report "dist/WINDOWS_EXE_SMOKE.json"
+          Get-Content $report
+      - name: Create proprietary portable package with manifest and SHA-256
+        run: python tools/package_windows_exe.py
+      - name: Upload exact binary and checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: CDD-Windows-EXE-${{ github.sha }}
+          path: |
+            dist/ComplianceDriftDetector.exe
+            dist/WINDOWS_EXE_SMOKE.json
+            dist/CDD_Windows_Portable_*.zip
+            dist/CDD_Windows_Portable_*.sha256
+          if-no-files-found: error
+          retention-days: 30
