@@ -16,6 +16,7 @@ No detector classification, evidence, report-seal, or verifier logic is changed.
 from __future__ import annotations
 
 import tkinter as tk
+import sys
 from tkinter import ttk
 
 from ui_app import (
@@ -228,4 +229,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    if len(sys.argv) == 4 and sys.argv[1:3] == ["--smoke-test", "--smoke-report"]:
+        from desktop_smoke import main as smoke_main
+        raise SystemExit(smoke_main(sys.argv[3]))
     main()
