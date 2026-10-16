@@ -31,6 +31,7 @@ from render_html_report import render_html_report
 from report_renderer import render_json_report, render_markdown_report
 from run_scan import load_evidence, load_policies
 from verify import verify_drift_evidence, verify_drift_report
+from desktop_paths import resource_root, reports_dir
 
 
 BG = "#252629"
@@ -68,8 +69,8 @@ class DriftUI(tk.Tk):
         self.minsize(1020, 680)
         self.configure(bg=BG)
 
-        self.root_dir = Path(__file__).parent.parent
-        self.output_dir = self.root_dir / "output"
+        self.root_dir = resource_root()
+        self.output_dir = reports_dir()
 
         self.policy_path = tk.StringVar()
         self.evidence_path = tk.StringVar()
