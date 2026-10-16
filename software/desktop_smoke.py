@@ -42,6 +42,10 @@ def run_smoke() -> dict:
     assert ok_evidence, reason_evidence
     assert "RECOVERED" in render_html_report(report)
     assert "RECOVERED" in render_markdown_report(report)
+    # The entire v2 report (including detail) must be sealed, not just the summary.
+    rendered["analyses"][0]["reason"] = "REWRITTEN-DETAILED-REASON"
+    ok_changed_detail, _ = verify_drift_report(rendered)
+    assert not ok_changed_detail, "Verifier accepted changed report detail"
     # Deliberate mutation: should be detected. Do not use real customer data.
     exported["behavior_evidence"][0]["observed_value"] = "TAMPERED-SMOKE"
     ok_tampered, _ = verify_drift_evidence(exported)
