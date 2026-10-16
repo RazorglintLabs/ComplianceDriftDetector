@@ -35,3 +35,16 @@ jobs:
         run: python software/verify.py output/drift_evidence.json
       - name: Qualify bundled deployment-approval pack
         run: python -m pytest -q tests/test_self_service.py
+      - name: Build exact-commit licensing evaluation archive
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
+        run: python tools/build_license_candidate.py
+      - name: Preserve evaluation ZIP and SHA-256 receipt
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: CDD-license-eval-${{ github.sha }}
+          path: |
+            dist/*.zip
+            dist/*.sha256
+          if-no-files-found: error
+          retention-days: 30
