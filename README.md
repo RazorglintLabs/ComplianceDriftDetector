@@ -76,6 +76,8 @@ Production-wide software signing, a built-in paid-license entitlement mechanism,
 
 **We retain core CDD IP** and offer scoped subscriptions, paid evaluations and separately negotiated OEM/embedded licensing. See [license tiers](LICENSE_TIERS.md), [Terms](TERMS_OF_SERVICE.md), [Privacy](PRIVACY_POLICY.md), and [Refund policy](REFUND_AND_CANCELLATION_POLICY.md). OEM/enterprise integrations, support and redistribution rights require a separate agreement.
 
+**Included human assistance is capped for new subscriptions:** Starter **2 requests / 1 interpretation / 20 minutes**, Team **4 / 1 / 45 minutes**, Consultant **6 / 2 / 90 minutes**, all per **paid billing month**. Interpretations count within both the request and time caps. All support is asynchronous, best-effort and not an SLA. See [Support Scope](docs/SUPPORT_SCOPE.md); this must be disclosed in the checkout agreement and does not retroactively reduce existing customers' rights.
+
 **Commercial and security contact:** [razorglint.ops@protonmail.com](mailto:razorglint.ops@protonmail.com).
 
 For vulnerability disclosures, see [SECURITY.md](SECURITY.md).
