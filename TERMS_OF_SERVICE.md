@@ -36,13 +36,31 @@ Customers must not submit production credentials, secrets, API keys, customer PI
 
 Customers are responsible for anonymizing and redacting input data before using assisted review services.
 
-## 5. Assisted Reviews
+## 5. Assisted Reviews, Support and Monthly Limits
 
-Assisted reviews provide interpretation of ComplianceDriftDetector outputs. They do not constitute legal advice, audit certification, regulatory approval, or formal compliance assessment.
+Assisted reviews explain **existing CDD outputs**; they are not independent evidence validation, audit certification, legal advice, regulatory approval, or a formal compliance assessment.
+
+**For new self-service subscriptions whose checkout or accepted agreement discloses these terms**, the monthly **combined** human-service limits are:
+
+| Tier | Focused email requests per paid billing month | Included written interpretations (part of those requests) | Maximum combined staff working time per paid billing month |
+| --- | ---: | ---: | ---: |
+| Starter | 2 | 1 | 20 minutes |
+| Team | 4 | 1 | 45 minutes |
+| Consultant | 6 | 2 | 90 minutes |
+
+**Report interpretations are counted against both the request and time cap**, not added on top. Limits apply per subscription account (including consultant engagements with multiple clients), not separately for each staff member, report or end client. A request addresses one focused topic; each written interpretation covers one focused question on one redacted report excerpt containing at most 10 policy claims or five pages.
+
+Included support is **best-effort asynchronous email** during ordinary business days; there is **no guaranteed response or resolution time, availability SLA or emergency/on-call support**. Team “priority support” refers to queue order ahead of Starter as capacity permits, not a guaranteed deadline. No live calls, remote assistance, bespoke implementation, client data preparation, policy drafting or ongoing consulting is included.
+
+Unused requests, interpretation slots and time do **not** roll over. If a limit is reached, further work is not included and is not charged automatically; any additional services require separate written quotation and approval. Staff effort spent reproducing an issue, examining redacted material and writing responses counts toward the monthly limit, which the provider will communicate when reached.
+
+When a Starter 7-day free trial is offered, **it includes self-service use and documentation only**; human-service allowances start with the first successfully paid month unless separately agreed. Security issue reports may always be submitted under [SECURITY.md](SECURITY.md), without establishing unlimited technical support.
+
+The precise request definitions, allowed inputs, exclusions and caps are detailed in [CDD Support Scope](docs/SUPPORT_SCOPE.md). **Existing subscriptions are not unilaterally reduced by publishing these limits**; prior accepted terms, required notice/consent, and any specific written agreement govern. Any mandatory consumer rights remain unaffected.
 
 ## 6. Availability and Updates
 
-Subscriptions include access to updates while the subscription remains active. Features, templates, and documentation may change over time.
+Active subscriptions provide access to **updates that are actually published** during the applicable license period; no specific monthly engineering, feature or template release cadence is guaranteed **for new purchases**. Features, templates, and documentation may change over time.
 
 ## 7. Payment and Subscription
 
