@@ -118,12 +118,12 @@ class DriftUI(tk.Tk):
         )
 
     def _build_shell(self) -> None:
-        header = tk.Frame(self, bg=HEADER, height=78, highlightthickness=1, highlightbackground=BORDER)
+        header = tk.Frame(self, bg=HEADER, height=96, highlightthickness=1, highlightbackground=BORDER)
         header.pack(fill="x")
         header.pack_propagate(False)
 
         left = tk.Frame(header, bg=HEADER)
-        left.pack(side="left", padx=28, pady=15)
+        left.pack(side="left", padx=28, pady=(12, 6))
         tk.Label(left, text="Compliance Drift Detector", bg=HEADER, fg=TEXT, font=("Segoe UI Semibold", 17)).pack(anchor="w")
         tk.Label(left, textvariable=self.header_section, bg=HEADER, fg=TEXT, font=FONT_SMALL).pack(anchor="w", pady=(2, 0))
 
@@ -198,7 +198,7 @@ class DriftUI(tk.Tk):
         ).pack(anchor="w")
         tk.Label(
             content,
-            text="Load two evidence files, run the deterministic checkpoint comparison, then inspect exactly where policy and behaviour diverge.",
+            text="Load a policy claims CSV and pre-classified behaviour evidence CSV; inspect where the supplied evidence diverges.",
             bg=BG,
             fg=TEXT,
             font=FONT,
@@ -232,7 +232,7 @@ class DriftUI(tk.Tk):
         p2 = self._panel(cards)
         p2.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
         tk.Label(p2, text="2. Behaviour evidence", bg=PANEL, fg=TEXT, font=FONT_SECTION).pack(anchor="w", padx=20, pady=(20, 4))
-        tk.Label(p2, text="Observed records showing what actually happened.", bg=PANEL, fg=MUTED, font=FONT, wraplength=430, justify="left").pack(anchor="w", padx=20)
+        tk.Label(p2, text="Operator-supplied observations and compliance labels.", bg=PANEL, fg=MUTED, font=FONT, wraplength=430, justify="left").pack(anchor="w", padx=20)
         inner2 = tk.Frame(p2, bg=PANEL)
         inner2.pack(fill="x", padx=20, pady=(20, 8))
         self._entry_row(inner2, "behavior_evidence.csv", self.evidence_path, "Choose evidence CSV", self.choose_evidence)
