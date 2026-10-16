@@ -23,6 +23,12 @@ Refunds may be considered case-by-case if:
 - The customer was charged after a confirmed cancellation request
 - Access was not delivered due to an error on our side
 
+## 3A. Support allowances and trials
+
+For newly sold subscriptions where the capped [Support Scope](docs/SUPPORT_SCOPE.md) has been clearly presented and accepted, included email support and written interpretation allowances are **bounded per paid billing month**, shared across the subscriber's account, and do not roll over or have a separate cash value. Exhausting an allowance does not trigger automatic extra charges; additional paid support needs a separate agreed quote.
+
+The 7-day Starter self-service trial, where offered, **does not include human interpretation or the paid-month email support allowance** unless expressly agreed in writing. Existing customers retain rights arising under their previously accepted terms. Nothing in this policy limits mandatory statutory refund or cancellation rights.
+
 ## 4. Assisted Review Refunds
 
 One-time assisted report reviews are refundable only before review work begins.
