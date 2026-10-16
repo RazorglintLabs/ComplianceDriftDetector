@@ -140,7 +140,7 @@ code {{ background: #eff1f3; padding: 0.15rem 0.4rem; border-radius: 3px; font-s
 </table>
 
 <h2>Verification</h2>
-<p>The version 2 JSON report hash covers metadata, input hashes, totals, summary, claim analyses, checkpoint history and undeclared findings. Older version 1 reports only sealed metadata and summary. The evidence export contains per-item and aggregate hashes. Neither hash proves who originally supplied the data.</p>
+<p>The version 2 JSON report hash covers metadata, input hashes, totals, summary, claim analyses, checkpoint history and undeclared findings. Older version 1 reports only sealed metadata and summary. Version 2 evidence exports also include a full-package hash covering exported metadata. These unkeyed hashes do not prove who originally supplied the data.</p>
 <table>
     <tr><td>Report hash</td><td class="hash">{_escape(report.report_hash)}</td></tr>
     <tr><td>Policy hash</td><td class="hash">{_escape(report.policy_hash)}</td></tr>
