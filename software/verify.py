@@ -189,15 +189,33 @@ def verify_drift_evidence(data: dict) -> tuple[bool, str]:
         if verification.get("hash_algorithm") not in (None, "SHA-256"):
             failures.append(f"Unexpected hash algorithm: {verification.get('hash_algorithm')}")
 
+        version = data.get("evidence_export_version")
+        if type(version) is int and version == 2:
+            full_package = dict(data)
+            full_verification = dict(verification)
+            received_hash = full_verification.pop("export_hash", None)
+            full_package["verification"] = full_verification
+            expected_hash = sha256(json.dumps(full_package, sort_keys=True))
+            if received_hash != expected_hash:
+                failures.append("Full evidence export hash mismatch")
+        elif version is not None:
+            return False, f"Unsupported evidence_export_version: {version!r}"
+
     except (KeyError, TypeError, ValueError) as exc:
         return False, f"Malformed evidence export: {exc}"
 
     if failures:
         return False, f"{len(failures)} verification failure(s):\n  " + "\n  ".join(failures[:10])
 
+    if version is None:
+        return True, (
+            f"Legacy v1 evidence verified: {len(claims)} claims, {len(evidence)} evidence items — "
+            "all item + aggregate hashes PASS (LIMITED: descriptions/source fields NOT sealed)"
+        )
     return True, (
         f"Evidence verified: {len(claims)} claims, {len(evidence)} evidence items — "
-        "all item + aggregate hashes PASS"
+        "all item + aggregate hashes PASS + full v2 export seal PASS "
+        "(not authenticated source provenance)"
     )
 
 
