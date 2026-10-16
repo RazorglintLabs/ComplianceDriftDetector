@@ -426,7 +426,7 @@ class ComplianceDriftDetector:
                 behavior_hash=sha256("EMPTY"),
                 total_claims=0,
                 total_evidence=0,
-                summary={"verdict": "NO_POLICIES"},
+                summary={"verdict": "NO_POLICIES", "state_counts": {}, "aligned_percentage": 0.0, "undeclared_behavior_count": 0},
             ))
 
         # Hash inputs
