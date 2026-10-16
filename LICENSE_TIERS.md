@@ -1,5 +1,7 @@
 # ComplianceDriftDetector License Tiers
 
+**Commercial position:** Razorglint Labs / TCOG Collective LLC retains core CDD IP. Subscriptions grant scoped use permissions, not ownership or OEM redistribution rights. The current portable EXE does not enforce subscriptions internally; delivery and licensing obligations must be managed under the applicable customer agreement.
+
 ## Monthly Licenses
 
 | Tier | Price | Best For |
