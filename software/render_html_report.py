@@ -140,14 +140,14 @@ code {{ background: #eff1f3; padding: 0.15rem 0.4rem; border-radius: 3px; font-s
 </table>
 
 <h2>Verification</h2>
-<p>The report hash seals generated metadata, input hashes, totals, and summary values. The evidence export contains per-item and aggregate hashes.</p>
+<p>The version 2 JSON report hash covers metadata, input hashes, totals, summary, claim analyses, checkpoint history and undeclared findings. Older version 1 reports only sealed metadata and summary. The evidence export contains per-item and aggregate hashes. Neither hash proves who originally supplied the data.</p>
 <table>
     <tr><td>Report hash</td><td class="hash">{_escape(report.report_hash)}</td></tr>
     <tr><td>Policy hash</td><td class="hash">{_escape(report.policy_hash)}</td></tr>
     <tr><td>Behavior hash</td><td class="hash">{_escape(report.behavior_hash)}</td></tr>
 </table>
-<p>Verify report JSON with: <code>python software/verify.py output/drift_report.json</code></p>
-<p>Verify exported evidence with: <code>python software/verify.py output/drift_evidence.json</code></p>
+<p><strong>Windows application:</strong> use the <strong>Export &amp; Verify</strong> screen to verify both generated JSON artifacts; no Python installation is required.</p>
+<p><strong>Source-code/CLI users only:</strong> <code>python software/verify.py output/drift_report.json</code> and <code>python software/verify.py output/drift_evidence.json</code>.</p>
 
 <div class="boundary">
 <h3>What This Report Shows</h3>
@@ -164,6 +164,8 @@ code {{ background: #eff1f3; padding: 0.15rem 0.4rem; border-radius: 3px; font-s
     <li>This does <strong>not</strong> validate the truth, completeness, or provenance of supplied source data</li>
     <li>This does <strong>not</strong> replace a formal audit or accredited assessment</li>
     <li>The current release does <strong>not</strong> infer compliance from raw logs or parse policy documents automatically</li>
+    <li>Claim-level numeric thresholds are <strong>not</strong> evaluated against observations; alignment uses operator-supplied compliant labels and global thresholds</li>
+    <li>Unkeyed hashes do <strong>not</strong> authenticate the publisher or prevent deliberate rewriting followed by recalculation</li>
 </ul>
 </div>
 
