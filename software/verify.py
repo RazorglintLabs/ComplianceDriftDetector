@@ -198,6 +198,8 @@ def verify_drift_evidence(data: dict) -> tuple[bool, str]:
             expected_hash = sha256(json.dumps(full_package, sort_keys=True))
             if received_hash != expected_hash:
                 failures.append("Full evidence export hash mismatch")
+        elif version is None and "export_hash" in verification:
+            return False, "Missing evidence_export_version on versioned export"
         elif version is not None:
             return False, f"Unsupported evidence_export_version: {version!r}"
 
