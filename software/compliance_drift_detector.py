@@ -501,8 +501,9 @@ class ComplianceDriftDetector:
         return seal_report(report)
 
     def export_evidence(self) -> dict:
-        """Export full evidence set with hashes for independent verification."""
-        return {
+        """Export v2 evidence with both item hashes and a full-package consistency hash."""
+        export = {
+            "evidence_export_version": 2,
             "policy_claims": [
                 {
                     "claim_id": c.claim_id,
@@ -532,3 +533,8 @@ class ComplianceDriftDetector:
                 "behavior_hash": hash_behavior(self.evidence),
             },
         }
+        # The package hash binds every exported field, including descriptions,
+        # source labels and compliance values omitted from legacy aggregate hashes.
+        # Unkeyed hashes are NOT signatures or authenticated source provenance.
+        export["verification"]["export_hash"] = sha256(json.dumps(export, sort_keys=True))
+        return export
