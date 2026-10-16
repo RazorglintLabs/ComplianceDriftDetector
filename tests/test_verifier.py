@@ -149,3 +149,43 @@ def test_no_policies_gets_consistent_v2_seal():
     passed, message = verify_drift_report(data)
     assert passed, message
     assert data["report_seal_version"] == 2
+
+
+
+def test_v2_full_evidence_seal_rejects_unhashed_legacy_metadata_changes():
+    import copy
+    det = _detector_with_evidence(1)
+    exported = det.export_evidence()
+    assert exported["evidence_export_version"] == 2
+    for change in (
+        lambda p: p["policy_claims"][0].__setitem__("description", "Changed title"),
+        lambda p: p["policy_claims"][0].__setitem__("policy_source", "someone else"),
+        lambda p: p["behavior_evidence"][0].__setitem__("source", "fabricated"),
+    ):
+        candidate = copy.deepcopy(exported)
+        change(candidate)
+        valid, message = verify_drift_evidence(candidate)
+        assert not valid, message
+        assert "Full evidence export hash mismatch" in message
+
+
+def test_v2_evidence_downgrade_and_unsupported_version_rejected():
+    det = _detector_with_evidence(1)
+    data = det.export_evidence()
+    del data["evidence_export_version"]
+    passed, _ = verify_drift_evidence(data)
+    assert not passed
+    data["evidence_export_version"] = 99
+    passed, message = verify_drift_evidence(data)
+    assert not passed
+    assert "Unsupported evidence_export_version" in message
+
+
+def test_v1_legacy_evidence_is_labeled_limited():
+    det = _detector_with_evidence(1)
+    data = det.export_evidence()
+    del data["evidence_export_version"]
+    del data["verification"]["export_hash"]
+    passed, message = verify_drift_evidence(data)
+    assert passed
+    assert "LIMITED" in message
