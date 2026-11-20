@@ -1,6 +1,18 @@
-# Compliance Drift Detector
+<div align="center">
 
-**Local-first, deterministic evidence-history analysis for structured policy controls.**
+# COMPLIANCE DRIFT DETECTOR
+**Deterministic policy-to-evidence checkpoint analysis**
+
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pytest](https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
+![Tkinter](https://img.shields.io/badge/Tkinter-Desktop%20UI-4B8BBE?style=for-the-badge&logo=python&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+
+**Windows x64 controlled preview · Structured inputs · Independently verified JSON exports**
+
+</div>
+
+
 
 [Windows quickstart](WINDOWS_EXE_QUICKSTART.md) · [Python/CLI quickstart](SELF_SERVICE_QUICKSTART.md) · [Capability boundaries](CLAIM_BOUNDARIES.md) · [Build and release status](docs/RELEASE_STATUS.md) · [Licensing](LICENSE_TIERS.md)
 
@@ -69,6 +81,12 @@ CDD produces `drift_report.html`, `drift_report.md`, `drift_report.json`, and `d
 Source checks run on **Ubuntu and Windows / Python 3.11 and 3.12**, including regression tests, synthetic demo and independent verification. The **Windows x64 build** additionally compiles and executes the frozen EXE from a separate directory and tests tamper rejection. See the [release status and exact CI receipts](docs/RELEASE_STATUS.md).
 
 Production-wide software signing, a built-in paid-license entitlement mechanism, and enterprise deployment assurance are **not represented as complete**.
+
+## Wider engineering portfolio
+
+CDD is one of Razorglint's openly inspectable source and qualification examples. Related independent engineering cases include the [Blueprint Roundtrip Engine's bounded regression/handoff methods](https://github.com/RazorglintLabs/damian-ketting-ai-systems-portfolio/blob/main/CASE_BRE_2026-11-20.md) and [Elite Pantry's evidence verification and method gates](https://github.com/RazorglintLabs/damian-ketting-ai-systems-portfolio/blob/main/CASE_ELITE_PANTRY_2026-11-20.md). The [founder portfolio](https://github.com/RazorglintLabs/damian-ketting-ai-systems-portfolio) contains a separate Playwright browser-QA case.
+
+These are **separate systems and demonstrations**. Their presence in the portfolio does not imply they are integrated into CDD or included in a CDD license.
 
 ## Licensing and contact
 
